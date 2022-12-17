@@ -18,6 +18,12 @@ class Fenetre:
 	def getFenetre(self):
 		return self.fenetre
 
+	def getHauteur(self):
+		return self.hauteur
+
+	def getLargeur(self):
+		return self.largeur
+
 	def draw(self):
 		if not self.fondDecran:
 			self.fenetre.fill(Fenetre.DEFAULT_BACKGROUND_COLOR)

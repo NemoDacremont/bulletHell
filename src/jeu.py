@@ -50,18 +50,17 @@ class Jeu():
 			# Racourci de notation
 			vue = self.vues[self.vueCourrante]
 
-			for event in pygame.event.get():
-				# Si on demande de fermer le jeu, on quitte
+			events = pygame.event.get()
+
+			# Si on demande de fermer le jeu, on quitte
+			for event in events:
 				if event.type == pygame.QUIT:
 					self.stopGame()
 
-				# met à jour la vue
-				vue.update(event)
-				vue.draw()
+			# met à jour la vue
+			vue.update(events)
+			vue.draw()
 
-				# on met à jour le visuel
-				pygame.display.flip()
-
-
-
+			# on met à jour le visuel
+			pygame.display.flip()
 

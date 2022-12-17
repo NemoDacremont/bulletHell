@@ -21,7 +21,7 @@ class Entite:
 		self.fenetre = fenetre
 
 
-	def update(self, event: Event):
+	def update(self, events: list[Event]):
 		pass
 
 	def draw(self):

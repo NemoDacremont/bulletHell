@@ -1,4 +1,7 @@
 
+from pygame.event import Event
+
+
 class Vue:
 	ETAT_PAUSE = 1
 	ETAT_NORMAL = 0
@@ -14,9 +17,9 @@ class Vue:
 		self.entitesAAfficher = []
 
 
-	def update(self, event):
+	def update(self, events: list[Event]):
 		for entite in self.entites:
-			entite.update(event)
+			entite.update(events)
 
 	def draw(self):
 		self.fenetre.draw()
