@@ -1,15 +1,22 @@
 
 from entites.ennemis.ennemi import Ennemi
 from entites.entite import Entite
-from entites.personnageJouable.personnageJouable import PersonnageJouable
+from entites.personnage import Personnage
+from entites.personnageJouable.personnage1 import Personnage1
 from vues.vue import Vue
 
 class VueBoss(Vue):
 	def __init__(self, jeu, etat: int, pausePossible: bool) -> None:
+		## Constructeur Vue
 		super().__init__(jeu, etat, pausePossible)
 
+		# Compteur pour connaître la phase actuelle
+		self.phase = 0
+
+		"""
 		## Création Personnage jouable
 		# Valeurs pour le personnage
+		joueurPVMax = 3
 		joueurX = 0
 		joueurY = 0
 		joueurLargeur = 50
@@ -17,28 +24,35 @@ class VueBoss(Vue):
 
 		# de façon à ce que la vitesse soit suffisante pour parcourir en 10 sec le plus petit
 		# entre la largeur et la longueur
-		vitesse = min(self.fenetre.getLargeur() / 10, self.fenetre.getHauteur() / 10)
+		joueurVitesse = min(self.fenetre.getLargeur() / 10, self.fenetre.getHauteur() / 10)
 
 		# Un gros coef
 		coefRalentissementFocus = 0.2
 
 		# Créé le personnage
 		joueur = PersonnageJouable("moi", self.fenetre, self, joueurLargeur,
-														joueurHauteur, joueurX, joueurY, -2, vitesse,
-														coefRalentissementFocus)
+														joueurHauteur, joueurX, joueurY, joueurPVMax, vitesse=joueurVitesse,
+														coefRalentissementFocus=coefRalentissementFocus)
+		"""
+
+		joueur = Personnage1(self.fenetre, self, 0, 0)
 
 		## Création d'un ennemi
+		ennemiPVMax = 100
 		ennemiX = 0
 		ennemiY = 0
 		ennemiLargeur = 40
 		ennemiHauteur = 40
 		ennemiVitesse = 0
 
-		ennemi = Ennemi(self.fenetre, self, "un gros méchant", ennemiLargeur, ennemiHauteur,
-									ennemiX, ennemiY, 1, ennemiVitesse)
+		ennemi = Ennemi("un gros méchant", self.fenetre, self, ennemiLargeur, ennemiHauteur,
+									ennemiX, ennemiY, ennemiPVMax, vitesse=ennemiVitesse)
 
-		self.entites = [joueur, ennemi]
-		self.entitesAAfficher = [joueur, ennemi]
+		self.personnages: list[Personnage] = [joueur, ennemi]
+		self.entitesAAfficher: list[Entite] = [joueur, ennemi]
+
+		for entite in self.entites:
+			print(entite.nom)
 
 
 

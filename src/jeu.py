@@ -1,8 +1,11 @@
 
-import pygame
 from fenetre import Fenetre
 from vues.vue import Vue
 from vues.vueBoss import VueBoss
+
+import pygame
+
+
 
 class Jeu():
 	def __init__(self, fenetreLargeur, fenetreHauteur, fps):

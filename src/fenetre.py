@@ -1,6 +1,6 @@
 
 import pygame
-from pygame.event import Event
+#from pygame.event import Event
 
 class Fenetre:
 	DEFAULT_BACKGROUND_COLOR = 120, 120, 120 # red

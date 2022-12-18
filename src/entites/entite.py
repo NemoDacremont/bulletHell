@@ -1,7 +1,6 @@
 
 
-from pygame import Surface
-from pygame.event import Event
+#from pygame import Surface
 import pygame
 
 from fenetre import Fenetre
@@ -11,7 +10,9 @@ from vues.vue import Vue
 class Entite:
 	COLOR = 0, 0, 255
 
-	def __init__(self, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float, x: float, y: float) -> None:
+	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float, x: float, y: float) -> None:
+
+		self.nom = nom
 
 		# Forme
 		self.largeur = largeur
@@ -27,9 +28,18 @@ class Entite:
 		# Sert à l'affichage
 		self.rect = pygame.Rect(x, y, largeur, hauteur)
 		self.fenetre = fenetre
+		self.vue = vue
 
+		# Permet à la vue de savoir s'il faut supprimer l'entite
+		self.doitRetirer: bool = False
 
-	def update(self, events: list[Event]):
+	def doitEtreRetirer(self) -> bool:
+		return self.doitRetirer
+
+	def retire(self) -> None:
+		self.doitRetirer = True
+
+	def update(self):
 		"""
 			Met à jour la position
 		"""
@@ -44,6 +54,7 @@ class Entite:
 
 	def draw(self):
 		fenetre = self.fenetre.getFenetre()
+		self.rect = pygame.Rect(self.x, self.y, self.largeur, self.hauteur)
 		fenetre.fill(Entite.COLOR, self.rect)
 
 

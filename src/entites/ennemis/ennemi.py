@@ -6,15 +6,20 @@ from vues.vue import Vue
 
 
 class Ennemi(Personnage):
-	COLOR = 255, 0, 0
+	COLOR = 255, 0, 0 # rouge car méchant :)
 
-	def __init__(self, fenetre: Fenetre, vue: Vue, nom: str, largeur: float, hauteur: float,
-							x: float, y: float, groupe: int, vitesse: float = 100) -> None:
+	## Les ennemis appartiennent au groupe 1
+	GROUPE = -1
+
+	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float,
+							x: float, y: float, PVMax: float, PV: float = -1, vitesse: float = 100) -> None:
 		# Constructeur du personnage
-		super().__init__(fenetre, vue, largeur, hauteur, x, y, groupe, vitesse)
+		super().__init__(nom, fenetre, vue, largeur, hauteur, x, y, PVMax, PV, vitesse)
 
 		# Toujours sympa d'avoir un nom :)
 		self.nom = nom
+
+		self.groupe = Ennemi.GROUPE
 
 
 	def draw(self):

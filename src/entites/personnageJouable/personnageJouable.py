@@ -8,15 +8,33 @@ from vues.vue import Vue
 
 
 class PersonnageJouable(Personnage):
-	DEPLACEMENT_HAUT = ["z", "Z"]
-	DEPLACEMENT_BAS = ["s", "S"]
-	DEPLACEMENT_GAUCHE = ["q", "Q"]
-	DEPLACEMENT_DROITE = ["d", "D"]
-	FOCUS = ["o", "O"]
+	TOUCHES_DEPLACEMENT_HAUT = ["z", "Z"]
+	TOUCHES_DEPLACEMENT_BAS = ["s", "S"]
+	TOUCHES_DEPLACEMENT_GAUCHE = ["q", "Q"]
+	TOUCHES_DEPLACEMENT_DROITE = ["d", "D"]
+	TOUCHES_FOCUS = ["o", "O"]
+
+	GROUPE = 1
 
 	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float,
-							x: float, y: float, groupe: int, vitesse: float =100, coefRalentissementFocus=0.3) -> None:
-		super().__init__(fenetre, vue, largeur, hauteur, x, y, groupe, vitesse)
+							x: float, y: float, PVMax: float, PV: float = -1, vitesse: float = 100,
+							coefRalentissementFocus: float = 0.3) -> None:
+		"""
+			Constructeur Personnage
+			Paramètres:
+				- nom: str, le nom du personnage
+				- fenetre: Fenetre, la fenêtre du jeu
+				- vue: Vue, La vue à laquelle il appartient
+				- largeur: float, la largeur en pixels du perssonnage
+				- hauteur: float, la hauteur en pixels du perssonnage
+				- x: float, la position initiale en x du personnage
+				- y: float, la position initiale en y du personnage
+				- PVMax: float, les PVs max du personnage
+				- PV: float, les PVs initiaux du personnage, si PV == -1, alors PV = PVMax
+				- vitesse: float, le nombre de pixels parcourus en 1 sec
+				- coefRalentissementFocus: float, correspond au ralentissement lors de l'action "focus"
+		"""
+		super().__init__(nom, fenetre, vue, largeur, hauteur, x, y, PVMax, PV, vitesse)
 
 		self.nom = nom
 
@@ -29,7 +47,7 @@ class PersonnageJouable(Personnage):
 		self.touchesDroite = 0
 
 		self.coefRalentissementFocus = coefRalentissementFocus
-
+		self.groupe = PersonnageJouable.GROUPE
 
 
 
@@ -37,42 +55,43 @@ class PersonnageJouable(Personnage):
 
 	def deplacements(self, event: Event):
 		## On met à jour les compteurs de touches pour les déplacements
-		# si on appuie sur une touche
+		# Détecte l'appuie sur une touche
 		if event.type == pygame.KEYDOWN:
 			touche = event.__dict__["unicode"]
 
-			if touche in PersonnageJouable.DEPLACEMENT_HAUT:
+			if touche in PersonnageJouable.TOUCHES_DEPLACEMENT_HAUT:
 				self.touchesHaut += 1
-			if touche in PersonnageJouable.DEPLACEMENT_BAS:
+			if touche in PersonnageJouable.TOUCHES_DEPLACEMENT_BAS:
 				self.touchesBas += 1
-			if touche in PersonnageJouable.DEPLACEMENT_GAUCHE:
+			if touche in PersonnageJouable.TOUCHES_DEPLACEMENT_GAUCHE:
 				self.touchesGauche += 1
-			if touche in PersonnageJouable.DEPLACEMENT_DROITE:
+			if touche in PersonnageJouable.TOUCHES_DEPLACEMENT_DROITE:
 				self.touchesDroite += 1
 
-			if touche in PersonnageJouable.FOCUS:
+			if touche in PersonnageJouable.TOUCHES_FOCUS:
 				self.toucheFocus += 1
 
 
 
-		# si on relache la touche
+		# Détecte le relâchement d'une touche
 		if event.type == pygame.KEYUP:
 			touche = event.__dict__["unicode"]
-			if touche in PersonnageJouable.DEPLACEMENT_HAUT:
+			if touche in PersonnageJouable.TOUCHES_DEPLACEMENT_HAUT:
 				self.touchesHaut -= 1
-			if touche in PersonnageJouable.DEPLACEMENT_BAS:
+			if touche in PersonnageJouable.TOUCHES_DEPLACEMENT_BAS:
 				self.touchesBas -= 1
-			if touche in PersonnageJouable.DEPLACEMENT_GAUCHE:
+			if touche in PersonnageJouable.TOUCHES_DEPLACEMENT_GAUCHE:
 				self.touchesGauche -= 1
-			if touche in PersonnageJouable.DEPLACEMENT_DROITE:
+			if touche in PersonnageJouable.TOUCHES_DEPLACEMENT_DROITE:
 				self.touchesDroite -= 1
 
-			if touche in PersonnageJouable.FOCUS:
+			if touche in PersonnageJouable.TOUCHES_FOCUS:
 				self.toucheFocus -= 1
 
 
-		# on peut alors mettre à jour les vitesses
+		## on peut alors mettre à jour les vitesses
 		coefRalentissement = 1
+		# Calcule en fonction du focus
 		if self.toucheFocus > 0:
 			coefRalentissement = self.coefRalentissementFocus
 
@@ -93,11 +112,28 @@ class PersonnageJouable(Personnage):
 			self.vx = 0
 
 	def update(self, events: list[Event]):
-		# agis sur la vitesse
+		# Détecte les entrées de l'utilisateur
 		for event in events:
 			self.deplacements(event)
 
-		# met à jour les déplacements etc
+		# met à jour la position
 		super().update(events)
 
+		# On empêche le joueur de sortir de l'écran
+		fenetreLargeur = self.fenetre.getLargeur()
+		fenetreHauteur = self.fenetre.getHauteur()
+		if self.x < 0:
+			self.x = 0
+		if self.x > fenetreLargeur - self.largeur:
+			self.x = fenetreLargeur - self.largeur
+		if self.y < 0:
+			self.y = 0
+		if self.y > fenetreHauteur - self.hauteur:
+			self.y = fenetreHauteur - self.hauteur
+
+
+
+	def draw(self):
+		self.rect = pygame.Rect(self.x, self.y, self.largeur, self.hauteur)
+		self.fenetre.getFenetre().fill(Personnage.COLOR, self.rect)
 
