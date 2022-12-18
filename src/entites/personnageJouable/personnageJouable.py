@@ -8,11 +8,11 @@ from vues.vue import Vue
 
 
 class PersonnageJouable(Personnage):
-	TOUCHES_DEPLACEMENT_HAUT = ["z", "Z"]
-	TOUCHES_DEPLACEMENT_BAS = ["s", "S"]
-	TOUCHES_DEPLACEMENT_GAUCHE = ["q", "Q"]
-	TOUCHES_DEPLACEMENT_DROITE = ["d", "D"]
-	TOUCHES_FOCUS = ["o", "O"]
+	TOUCHES_DEPLACEMENT_HAUT = [pygame.K_z]
+	TOUCHES_DEPLACEMENT_BAS = [pygame.K_s]
+	TOUCHES_DEPLACEMENT_GAUCHE = [pygame.K_q]
+	TOUCHES_DEPLACEMENT_DROITE = [pygame.K_d]
+	TOUCHES_FOCUS = [pygame.K_o]
 
 	GROUPE = 1
 
@@ -51,13 +51,11 @@ class PersonnageJouable(Personnage):
 
 
 
-
-
 	def deplacements(self, event: Event):
 		## On met à jour les compteurs de touches pour les déplacements
 		# Détecte l'appuie sur une touche
 		if event.type == pygame.KEYDOWN:
-			touche = event.__dict__["unicode"]
+			touche = event.__dict__["key"]
 
 			if touche in PersonnageJouable.TOUCHES_DEPLACEMENT_HAUT:
 				self.touchesHaut += 1
@@ -75,7 +73,7 @@ class PersonnageJouable(Personnage):
 
 		# Détecte le relâchement d'une touche
 		if event.type == pygame.KEYUP:
-			touche = event.__dict__["unicode"]
+			touche = event.__dict__["key"]
 			if touche in PersonnageJouable.TOUCHES_DEPLACEMENT_HAUT:
 				self.touchesHaut -= 1
 			if touche in PersonnageJouable.TOUCHES_DEPLACEMENT_BAS:
