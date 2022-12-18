@@ -47,6 +47,11 @@ class Personnage(Entite):
 
 		self.vitesse= vitesse
 
+
+	def getPosition(self):
+		return self.x, self.y
+
+
 	def getGroupe(self):
 		return self.groupe
 

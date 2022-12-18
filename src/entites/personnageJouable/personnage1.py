@@ -9,6 +9,7 @@ if TYPE_CHECKING:
 
 from entites.personnageJouable.personnageJouable import PersonnageJouable
 from entites.balles.balleDroite import BalleDroite
+from entites.balles.balleHoming import BalleHoming
 
 
 
@@ -53,8 +54,12 @@ class Personnage1(PersonnageJouable):
 		tir2 = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur, tir2X, tirY,
 											PersonnageJouable.GROUPE, tirVitesse, tirDegats)
 
+		tir3 = BalleHoming(self.fenetre, self.vue, balleLargeur, balleHauteur, tir1X, tirY,
+											PersonnageJouable.GROUPE, tirVitesse/2, tirDegats)
+
 		self.vue.ajouteBalle(tir1)
 		self.vue.ajouteBalle(tir2)
+		self.vue.ajouteBalle(tir3)
 
 
 	def update(self, events: list[Event]):
