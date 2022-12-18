@@ -1,5 +1,5 @@
 
-from entites.ennemis.ennemi import Ennemi
+from entites.ennemis.boss1 import Boss1
 from entites.entite import Entite
 from entites.personnage import Personnage
 from entites.personnageJouable.personnage1 import Personnage1
@@ -43,9 +43,9 @@ class VueBoss(Vue):
 		ennemiY = 0
 		ennemiLargeur = 40
 		ennemiHauteur = 40
-		ennemiVitesse = 0
+		ennemiVitesse = 20
 
-		ennemi = Ennemi("un gros méchant", self.fenetre, self, ennemiLargeur, ennemiHauteur,
+		ennemi = Boss1(self.fenetre, self, ennemiLargeur, ennemiHauteur,
 									ennemiX, ennemiY, ennemiPVMax, vitesse=ennemiVitesse)
 
 		self.personnages: list[Personnage] = [joueur, ennemi]

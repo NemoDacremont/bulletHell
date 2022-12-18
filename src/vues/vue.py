@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 	from pygame.event import Event
 	from entites.personnage import Personnage
 
+import pygame
 
 class Vue:
 	ETAT_PAUSE = 1
@@ -47,6 +48,9 @@ class Vue:
 
 
 	def update(self, events: list[Event]):
+		for event in events:
+			if event.type == pygame.KEYDOWN:
+				print(event.__dict__)
 
 		## Update les entites
 		for i in range(len(self.entites)-1, -1, -1):
