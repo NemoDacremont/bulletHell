@@ -3,7 +3,7 @@ import pygame
 from pygame.event import Event
 
 class Fenetre:
-	DEFAULT_BACKGROUND_COLOR = 255, 0, 0 # red
+	DEFAULT_BACKGROUND_COLOR = 120, 120, 120 # red
 
 	def __init__(self, largeur: int, hauteur: int, fps: int, fondDecran) -> None:
 		# Dimensions

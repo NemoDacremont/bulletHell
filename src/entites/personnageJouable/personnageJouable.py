@@ -16,16 +16,21 @@ class PersonnageJouable(Personnage):
 
 	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float,
 							x: float, y: float, groupe: int, vitesse: float =100, coefRalentissementFocus=0.3) -> None:
-		super().__init__(fenetre, vue, largeur, hauteur, x, y, groupe, vitesse, coefRalentissementFocus)
+		super().__init__(fenetre, vue, largeur, hauteur, x, y, groupe, vitesse)
 
 		self.nom = nom
 
+		# Compteurs pour utiliser
 		self.toucheFocus = 0
 
 		self.touchesHaut = 0
 		self.touchesBas = 0
 		self.touchesGauche = 0
 		self.touchesDroite = 0
+
+		self.coefRalentissementFocus = coefRalentissementFocus
+
+
 
 
 
