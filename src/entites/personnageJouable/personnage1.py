@@ -62,19 +62,27 @@ class Personnage1(PersonnageJouable):
 										tir1X, tirY, PersonnageJouable.GROUPE, tirVitesse / 2,
 										tirDegats)
 
-		theta = 0
-		v_r = 5
-		v_theta = pi / 3
 
-		tir4 = BalleCirculaire(self.fenetre, self.vue, balleLargeur, balleHauteur,
-												tir1X, tirY, PersonnageJouable.GROUPE, tirDegats,
-												theta, v_r, v_theta)
+		for i in range(6):
+			x0, y0 = self.getPositionCentre()
+
+			tirX0 = x0 - balleLargeur / 2
+			tirY0 = y0 - balleHauteur / 2
+
+			theta = i * (pi / 3)
+			v_r = 5
+			v_theta = pi / 6
+
+			balle = BalleCirculaire(self.fenetre, self.vue, balleLargeur, balleHauteur,
+													tirX0, tirY0, PersonnageJouable.GROUPE, tirDegats,
+													theta, v_r, v_theta)
+
+			self.vue.ajouteBalle(balle)
 
 
 		self.vue.ajouteBalle(tir1)
 		self.vue.ajouteBalle(tir2)
 		self.vue.ajouteBalle(tir3)
-		self.vue.ajouteBalle(tir4)
 
 
 	def update(self, events: list[Event]):
