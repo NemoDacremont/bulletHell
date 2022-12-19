@@ -6,19 +6,18 @@ from vues.vueBoss import VueBoss
 import pygame
 
 
-
 class Jeu():
-	def __init__(self, fenetreLargeur, fenetreHauteur, fps):
+	def __init__(self, fenetreLargeur: int, fenetreHauteur: int, fps: int):
 		fondDecran = None
 		self.fenetre = Fenetre(fenetreLargeur, fenetreHauteur, fps, fondDecran)
 
 		# le jeu est en train de fonctionner
 		self.tourne = True
 
-		## Créé le joueur
+		# Créé le joueur
 		self.joueur = None
 
-		## Créé les vues
+		# Créé les vues
 		vue = VueBoss(self, Vue.ETAT_NORMAL, pausePossible=True)
 
 		self.vues: list[Vue] = [vue]
@@ -66,4 +65,6 @@ class Jeu():
 
 			# on met à jour le visuel
 			pygame.display.flip()
+
+
 

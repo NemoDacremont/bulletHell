@@ -5,9 +5,10 @@ from entites.personnage import Personnage
 from entites.personnageJouable.personnage1 import Personnage1
 from vues.vue import Vue
 
+
 class VueBoss(Vue):
 	def __init__(self, jeu, etat: int, pausePossible: bool) -> None:
-		## Constructeur Vue
+		# Constructeur Vue
 		super().__init__(jeu, etat, pausePossible)
 
 		# Compteur pour connaître la phase actuelle
@@ -37,7 +38,7 @@ class VueBoss(Vue):
 
 		joueur = Personnage1(self.fenetre, self, 0, 0)
 
-		## Création d'un ennemi
+		# Création d'un ennemi
 		ennemiPVMax = 100
 		ennemiX = 0
 		ennemiY = 0

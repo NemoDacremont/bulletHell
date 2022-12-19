@@ -15,8 +15,10 @@ class Boss1(Boss):
 	NOM = "unPremierBoss"
 
 	def __init__(self, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float,
-							x: float, y: float, PVMax: float, PV: float = -1, vitesse: float = 50) -> None:
-		super().__init__(Boss1.NOM, fenetre, vue, largeur, hauteur, x, y, PVMax, PV, vitesse)
+							x: float, y: float, PVMax: float, PV: float = -1,
+							vitesse: float = 50) -> None:
+		super().__init__(Boss1.NOM, fenetre, vue, largeur, hauteur, x, y, PVMax, PV,
+										vitesse)
 
 		self.vx = vitesse
 		self.vy = 0

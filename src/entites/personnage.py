@@ -13,7 +13,7 @@ from entites.entite import Entite
 
 class Personnage(Entite):
 	COLOR = 0, 255, 0
-	V_EPS = 5 # on considère la vitesse nulle si <5
+	V_EPS = 5  # on considère la vitesse nulle si <5
 
 	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float,
 							x: float, y: float, PVMax: float, PV: float = -1, vitesse: float = 100) -> None:
@@ -45,7 +45,16 @@ class Personnage(Entite):
 		# Vitesse
 		self.vx, self.vy = 0, 0
 
-		self.vitesse= vitesse
+		self.vitesse = vitesse
+
+	def getDimension(self):
+		return self.largeur, self.hauteur
+
+	def getPositionCentre(self):
+		personnageCentreX = self.x + self.largeur / 2
+		personnageCentreY = self.y + self.hauteur / 2
+
+		return personnageCentreX, personnageCentreY
 
 
 	def getPosition(self):
