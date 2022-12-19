@@ -2,6 +2,8 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
+import pygame
+
 if TYPE_CHECKING:
 	from pygame.event import Event
 	from fenetre import Fenetre
@@ -16,13 +18,17 @@ from math import pi
 
 class Personnage1(PersonnageJouable):
 	NOM = "personnage1"
+
+	# Affichage
 	LARGEUR = 50
 	HAUTEUR = 50
+
+	# caractéristiques
 	PV_MAX = 10
 	VITESSE = 100
 	COEF_RALENTISSEMENT_FOCUS = 0.3
 
-	CADENCE_DE_TIR = 3
+	CADENCE_DE_TIR = 6
 	DEGATS = 1
 
 	def __init__(self, fenetre: Fenetre, vue: Vue, x: float, y: float) -> None:
@@ -32,6 +38,7 @@ class Personnage1(PersonnageJouable):
 										vitesse=Personnage1.VITESSE,
 										coefRalentissementFocus=Personnage1.COEF_RALENTISSEMENT_FOCUS)
 
+		# Timer de tir
 		self.timerTir = 1 / Personnage1.CADENCE_DE_TIR
 
 
@@ -71,7 +78,7 @@ class Personnage1(PersonnageJouable):
 
 			theta = i * (pi / 3)
 			v_r = 5
-			v_theta = pi / 6
+			v_theta = pi / 3
 
 			balle = BalleCirculaire(self.fenetre, self.vue, balleLargeur, balleHauteur,
 													tirX0, tirY0, PersonnageJouable.GROUPE, tirDegats,
@@ -94,8 +101,6 @@ class Personnage1(PersonnageJouable):
 		if self.timerTir <= 0:
 			self.timerTir = 1 / Personnage1.CADENCE_DE_TIR
 			self.tire()
-
-
 
 
 

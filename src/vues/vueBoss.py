@@ -40,8 +40,8 @@ class VueBoss(Vue):
 
 		#  Création d'un ennemi
 		ennemiPVMax = 100
-		ennemiX = 0
-		ennemiY = 0
+		ennemiX = 50
+		ennemiY = 50
 		ennemiLargeur = 40
 		ennemiHauteur = 40
 		ennemiVitesse = 20

@@ -28,7 +28,9 @@ class Balle(Entite):
 		personnages = self.vue.getPersonnages()
 
 		for personnage in personnages:
-			if self.rect.colliderect(personnage.rect) and personnage.getGroupe() != self.groupe:
+			if self.hitbox.colliderect(personnage.hitbox) and \
+				personnage.getGroupe() != self.groupe:
+
 				personnage.recoitDegats(self.degats)
 				self.retire()
 

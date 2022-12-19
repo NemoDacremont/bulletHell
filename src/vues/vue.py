@@ -80,13 +80,13 @@ class Vue:
 		for entite in self.entites:
 			entite.draw()
 
-		# Affiche les personnages
-		for personnage in self.personnages:
-			personnage.draw()
-
 		# Affiche les balles
 		for balle in self.balles:
 			balle.draw()
+
+		# Affiche les personnages
+		for personnage in self.personnages:
+			personnage.draw()
 
 
 

@@ -1,6 +1,6 @@
 
 
-#from pygame import Surface
+# from pygame import Surface
 import pygame
 
 from fenetre import Fenetre
@@ -10,7 +10,8 @@ from vues.vue import Vue
 class Entite:
 	COLOR = 0, 0, 255
 
-	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float, x: float, y: float) -> None:
+	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float,
+							hauteur: float, x: float, y: float) -> None:
 
 		self.nom = nom
 
@@ -25,8 +26,11 @@ class Entite:
 		# Vitesse
 		self.vx, self.vy = 0, 0
 
+		# pour les collisions
+		self.hitbox = pygame.Rect(x, y, largeur, hauteur)
+
 		# Sert à l'affichage
-		self.rect = pygame.Rect(x, y, largeur, hauteur)
+		self.rectAffichage = pygame.Rect(x, y, largeur, hauteur)
 		self.fenetre = fenetre
 		self.vue = vue
 
@@ -44,6 +48,7 @@ class Entite:
 			Met à jour la position
 		"""
 		fps = self.fenetre.fps
+
 		# Calculs position
 		dx = self.vx / fps
 		dy = self.vy / fps
@@ -51,10 +56,13 @@ class Entite:
 		self.x += dx
 		self.y += dy
 
+		# Calcul de la hitbox
+		self.hitbox = pygame.Rect(self.x, self.y, self.largeur, self.hauteur)
+
 
 	def draw(self):
 		fenetre = self.fenetre.getFenetre()
-		self.rect = pygame.Rect(self.x, self.y, self.largeur, self.hauteur)
-		fenetre.fill(Entite.COLOR, self.rect)
+		self.rectAffichage = pygame.Rect(self.x, self.y, self.largeur, self.hauteur)
+		fenetre.fill(Entite.COLOR, self.rectAffichage)
 
 

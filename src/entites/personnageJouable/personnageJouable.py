@@ -16,6 +16,10 @@ class PersonnageJouable(Personnage):
 
 	GROUPE = 1
 
+	HITBOX_COLOR = 255, 0, 255
+	HITBOX_LARGEUR = 10
+	HITBOX_HAUTEUR = 10
+
 	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float,
 							x: float, y: float, PVMax: float, PV: float = -1, vitesse: float = 100,
 							coefRalentissementFocus: float = 0.3) -> None:
@@ -32,7 +36,8 @@ class PersonnageJouable(Personnage):
 				- PVMax: float, les PVs max du personnage
 				- PV: float, les PVs initiaux du personnage, si PV == -1, alors PV = PVMax
 				- vitesse: float, le nombre de pixels parcourus en 1 sec
-				- coefRalentissementFocus: float, correspond au ralentissement lors de l'action "focus"
+				- coefRalentissementFocus: float, correspond au ralentissement lors de
+					l'action "focus"
 		"""
 		super().__init__(nom, fenetre, vue, largeur, hauteur, x, y, PVMax, PV, vitesse)
 
@@ -49,10 +54,12 @@ class PersonnageJouable(Personnage):
 		self.coefRalentissementFocus = coefRalentissementFocus
 		self.groupe = PersonnageJouable.GROUPE
 
+		self.hitbox = pygame.Rect(x, y, PersonnageJouable.HITBOX_LARGEUR,
+														PersonnageJouable.HITBOX_HAUTEUR)
 
 
-	def deplacements(self, event: Event):
-		## On met à jour les compteurs de touches pour les déplacements
+	def updateAppuiDeTouche(self, event: Event):
+		# On met à jour les compteurs de touches pour les déplacements
 		# Détecte l'appuie sur une touche
 		if event.type == pygame.KEYDOWN:
 			touche = event.__dict__["key"]
@@ -69,8 +76,7 @@ class PersonnageJouable(Personnage):
 			if touche in PersonnageJouable.TOUCHES_FOCUS:
 				self.toucheFocus += 1
 
-
-
+	def updateRelachementTouche(self, event: Event):
 		# Détecte le relâchement d'une touche
 		if event.type == pygame.KEYUP:
 			touche = event.__dict__["key"]
@@ -87,7 +93,12 @@ class PersonnageJouable(Personnage):
 				self.toucheFocus -= 1
 
 
-		## on peut alors mettre à jour les vitesses
+	def deplacements(self, event: Event):
+		# Mise à joue des compteurs
+		self.updateAppuiDeTouche(event)
+		self.updateRelachementTouche(event)
+
+		# on peut alors mettre à jour les vitesses
 		coefRalentissement = 1
 		# Calcule en fonction du focus
 		if self.toucheFocus > 0:
@@ -116,6 +127,13 @@ class PersonnageJouable(Personnage):
 
 		# met à jour la position
 		super().update(events)
+		# On réécrit sur la hitbox
+		centreX, centreY = self.getPositionCentre()
+		hitboxX = centreX - PersonnageJouable.HITBOX_LARGEUR / 2
+		hitboxY = centreY - PersonnageJouable.HITBOX_HAUTEUR / 2
+
+		self.hitbox = pygame.Rect(hitboxX, hitboxY, PersonnageJouable.HITBOX_LARGEUR,
+														PersonnageJouable.HITBOX_HAUTEUR)
 
 		# On empêche le joueur de sortir de l'écran
 		fenetreLargeur = self.fenetre.getLargeur()
@@ -132,6 +150,10 @@ class PersonnageJouable(Personnage):
 
 
 	def draw(self):
-		self.rect = pygame.Rect(self.x, self.y, self.largeur, self.hauteur)
-		self.fenetre.getFenetre().fill(Personnage.COLOR, self.rect)
+		self.rectAffichage = pygame.Rect(self.x, self.y, self.largeur, self.hauteur)
+		self.fenetre.getFenetre().fill(Personnage.COLOR, self.rectAffichage)
+
+		self.fenetre.getFenetre().fill(PersonnageJouable.HITBOX_COLOR, self.hitbox)
+
+
 
