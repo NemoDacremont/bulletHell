@@ -18,9 +18,10 @@ class BalleHoming(Balle):
 	def __init__(self, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float,
 							x: float, y: float, groupe: int, vitesse: float, degats: float):
 		super().__init__(BalleHoming.NOM, fenetre, vue, largeur, hauteur, x, y,
-										groupe, vitesse, degats)
+										groupe, degats)
 
 
+		self.vitesse = vitesse
 		self.cible: Personnage
 		self.trouvePlusProche()  # Permet d'initialiser la cible
 
@@ -52,8 +53,8 @@ class BalleHoming(Balle):
 		cibleCentreX, cibleCentreY = self.cible.getPositionCentre()
 		distCible = sqrt((self.x - cibleCentreX)**2 + (self.y - cibleCentreY)**2)
 
-		self.vx = - ((cibleCentreX - self.x) / distCible) * self.vitesse
-		self.vy = - ((cibleCentreY - self.y) / distCible) * self.vitesse
+		self.vx = ((cibleCentreX - self.x) / distCible) * self.vitesse
+		self.vy = ((cibleCentreY - self.y) / distCible) * self.vitesse
 
 
 		super().update()

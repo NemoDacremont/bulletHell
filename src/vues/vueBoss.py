@@ -38,7 +38,7 @@ class VueBoss(Vue):
 
 		joueur = Personnage1(self.fenetre, self, 0, 0)
 
-		# Création d'un ennemi
+		#  Création d'un ennemi
 		ennemiPVMax = 100
 		ennemiX = 0
 		ennemiY = 0

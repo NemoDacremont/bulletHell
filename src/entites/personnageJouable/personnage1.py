@@ -7,11 +7,11 @@ if TYPE_CHECKING:
 	from fenetre import Fenetre
 	from vues.vue import Vue
 
+from entites.balles.balleCirculaire import BalleCirculaire
 from entites.personnageJouable.personnageJouable import PersonnageJouable
 from entites.balles.balleDroite import BalleDroite
 from entites.balles.balleHoming import BalleHoming
-
-
+from math import pi
 
 
 class Personnage1(PersonnageJouable):
@@ -37,29 +37,44 @@ class Personnage1(PersonnageJouable):
 
 	def tire(self):
 		"""
-			Attaque: tire 2 projectiles devant le personnage
+			Attaque: tire 2 projectiles devant le personnage et une balle homing
 		"""
 		balleLargeur = 10
 		balleHauteur = 10
 
 		tir1X = self.x + (self.largeur / 4) - (balleLargeur / 2)
-		tir2X = self.x + (3*self.largeur / 4) - (balleLargeur / 2)
-		tirY = self.y - 2*balleHauteur
+		tir2X = self.x + (3 * self.largeur / 4) - (balleLargeur / 2)
+		tirY = self.y - 2 * balleHauteur
+
+		tirDirection = -pi / 2  # part vers le haut
 
 		tirVitesse = 200
 		tirDegats = Personnage1.DEGATS
 
-		tir1 = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur, tir1X, tirY,
-											PersonnageJouable.GROUPE, tirVitesse, tirDegats)
-		tir2 = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur, tir2X, tirY,
-											PersonnageJouable.GROUPE, tirVitesse, tirDegats)
+		tir1 = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur,
+										tir1X, tirY, PersonnageJouable.GROUPE, tirVitesse,
+										tirDegats, tirDirection)
+		tir2 = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur,
+										tir2X, tirY, PersonnageJouable.GROUPE, tirVitesse,
+										tirDegats, tirDirection)
 
-		tir3 = BalleHoming(self.fenetre, self.vue, balleLargeur, balleHauteur, tir1X, tirY,
-											PersonnageJouable.GROUPE, tirVitesse/2, tirDegats)
+		tir3 = BalleHoming(self.fenetre, self.vue, balleLargeur, balleHauteur,
+										tir1X, tirY, PersonnageJouable.GROUPE, tirVitesse / 2,
+										tirDegats)
+
+		theta = 0
+		v_r = 5
+		v_theta = pi / 3
+
+		tir4 = BalleCirculaire(self.fenetre, self.vue, balleLargeur, balleHauteur,
+												tir1X, tirY, PersonnageJouable.GROUPE, tirDegats,
+												theta, v_r, v_theta)
+
 
 		self.vue.ajouteBalle(tir1)
 		self.vue.ajouteBalle(tir2)
 		self.vue.ajouteBalle(tir3)
+		self.vue.ajouteBalle(tir4)
 
 
 	def update(self, events: list[Event]):

@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
 	from fenetre import Fenetre
 	from vues.vue import Vue
-	#from pygame import Surface
+	# from pygame import Surface
 
 from entites.entite import Entite
 import pygame
@@ -14,15 +14,14 @@ import pygame
 
 
 class Balle(Entite):
-	COLOR = 255, 0, 255 # violet
+	COLOR = 255, 0, 255  # violet
 
 	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float,
-							hauteur: float, x: float, y: float, groupe: int, vitesse: float,
+							hauteur: float, x: float, y: float, groupe: int,
 							degats: float) -> None:
 		super().__init__(nom, fenetre, vue, largeur, hauteur, x, y)
 
 		self.groupe = groupe
-		self.vitesse = -vitesse
 		self.degats = degats
 
 	def collision(self):
