@@ -18,6 +18,9 @@ class Fenetre:
 	def getFenetre(self):
 		return self.fenetre
 
+	def getDimensions(self):
+		return self.largeur, self.hauteur
+
 	def getHauteur(self):
 		return self.hauteur
 

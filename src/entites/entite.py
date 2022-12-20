@@ -37,11 +37,28 @@ class Entite:
 		# Permet à la vue de savoir s'il faut supprimer l'entite
 		self.doitRetirer: bool = False
 
+
+	def getDimension(self):
+		return self.largeur, self.hauteur
+
+	def getPositionCentre(self):
+		personnageCentreX = self.x + self.largeur / 2
+		personnageCentreY = self.y + self.hauteur / 2
+
+		return personnageCentreX, personnageCentreY
+
+
+	def getPosition(self):
+		return self.x, self.y
+
+
 	def doitEtreRetirer(self) -> bool:
 		return self.doitRetirer
 
+
 	def retire(self) -> None:
 		self.doitRetirer = True
+
 
 	def update(self):
 		"""

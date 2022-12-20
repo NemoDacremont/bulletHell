@@ -28,10 +28,8 @@ class Ennemi(Personnage):
 		super().__init__(nom, fenetre, vue, largeur, hauteur, x, y, PVMax, PV,
 									vitesse)
 
-		# Toujours sympa d'avoir un nom :)
-		self.nom = nom
-
 		self.groupe = Ennemi.GROUPE
+
 
 	def draw(self):
 		self.rectAffichage = pygame.Rect(self.x, self.y, self.largeur, self.hauteur)

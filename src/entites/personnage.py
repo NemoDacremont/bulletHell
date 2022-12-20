@@ -47,26 +47,15 @@ class Personnage(Entite):
 
 		self.vitesse = vitesse
 
-	def getDimension(self):
-		return self.largeur, self.hauteur
-
-	def getPositionCentre(self):
-		personnageCentreX = self.x + self.largeur / 2
-		personnageCentreY = self.y + self.hauteur / 2
-
-		return personnageCentreX, personnageCentreY
-
-
-	def getPosition(self):
-		return self.x, self.y
-
 
 	def getGroupe(self):
 		return self.groupe
 
+
 	def recoitDegats(self, degats: float):
 		self.PV -= degats
 		print(f"{self.nom} prend des dégats: il lui reste {self.PV} PVs")
+
 
 	def update(self, events: list[Event]):
 		"""

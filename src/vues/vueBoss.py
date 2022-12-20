@@ -50,10 +50,9 @@ class VueBoss(Vue):
 									ennemiX, ennemiY, ennemiPVMax, vitesse=ennemiVitesse)
 
 		self.personnages: list[Personnage] = [joueur, ennemi]
-		self.entitesAAfficher: list[Entite] = [joueur, ennemi]
 
-		for entite in self.entites:
-			print(entite.nom)
+		for personnage in self.personnages:
+			print(personnage.nom)
 
 
 

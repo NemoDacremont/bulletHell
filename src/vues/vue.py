@@ -26,7 +26,7 @@ class Vue:
 		self.personnages: list[Personnage] = []
 
 		self.entites: list[Entite] = []
-		self.entitesAAfficher: list[Entite] = []
+		# self.entitesAAfficher: list[Entite] = []
 
 
 	def getPersonnages(self):
