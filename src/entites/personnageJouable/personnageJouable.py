@@ -12,7 +12,9 @@ class PersonnageJouable(Personnage):
 	TOUCHES_DEPLACEMENT_BAS = [pygame.K_s]
 	TOUCHES_DEPLACEMENT_GAUCHE = [pygame.K_q]
 	TOUCHES_DEPLACEMENT_DROITE = [pygame.K_d]
-	TOUCHES_FOCUS = [pygame.K_o]
+
+	TOUCHES_FOCUS = [pygame.K_k]
+	TOUCHE_ATTAQUE = [pygame.K_o]
 
 	GROUPE = 1
 
@@ -58,6 +60,8 @@ class PersonnageJouable(Personnage):
 		self.touchesGauche = 0
 		self.touchesDroite = 0
 
+		self.toucheAttaque = 0
+
 		self.coefRalentissementFocus = coefRalentissementFocus
 		self.groupe = PersonnageJouable.GROUPE
 
@@ -89,6 +93,9 @@ class PersonnageJouable(Personnage):
 			if touche in PersonnageJouable.TOUCHES_FOCUS:
 				self.toucheFocus += 1
 
+			if touche in PersonnageJouable.TOUCHE_ATTAQUE:
+				self.toucheAttaque += 1
+
 
 	def updateRelachementTouche(self, event: Event):
 		# Détecte le relâchement d'une touche
@@ -105,6 +112,9 @@ class PersonnageJouable(Personnage):
 
 			if touche in PersonnageJouable.TOUCHES_FOCUS:
 				self.toucheFocus -= 1
+
+			if touche in PersonnageJouable.TOUCHE_ATTAQUE:
+				self.toucheAttaque -= 1
 
 
 	def updateHitbox(self):

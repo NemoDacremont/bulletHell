@@ -67,6 +67,9 @@ class Personnage(Entite):
 		# met à jour position
 		super().update()
 
+		if self.PV <= 0:
+			self.retire()
+
 
 	def draw(self):
 		self.rect = pygame.Rect(self.x, self.y, self.largeur, self.hauteur)

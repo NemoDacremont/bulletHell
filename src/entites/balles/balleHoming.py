@@ -30,7 +30,16 @@ class BalleHoming(Balle):
 
 	def trouvePlusProche(self):
 		personnages = self.vue.getPersonnages()
+		# Si tous les personnages sont du même groupe, ne tire pas
+		c = 0
+		for personnage in personnages:
+			if personnage.getGroupe() == self.groupe:
+				c += 1
 
+		if c == len(personnages):
+			self.retire()
+
+		# Cherche l'ennemi le plus proche
 		distMin = inf
 		personnageMin = personnages[0]
 		for personnage in personnages:

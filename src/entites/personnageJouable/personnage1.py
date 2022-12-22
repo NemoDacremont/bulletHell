@@ -41,37 +41,39 @@ class Personnage1(PersonnageJouable):
 		self.timerTir = 1 / Personnage1.CADENCE_DE_TIR
 
 
-	def tire(self):
+	def tire(self, events: list[Event]):
 		"""
 			Attaque: tire 2 projectiles devant le personnage et une balle homing
 		"""
-		balleLargeur = 10
-		balleHauteur = 10
+		if self.toucheAttaque > 0:
+			balleLargeur = 10
+			balleHauteur = 10
 
-		tir1X = self.x + (self.largeur / 4) - (balleLargeur / 2)
-		tir2X = self.x + (3 * self.largeur / 4) - (balleLargeur / 2)
-		tirY = self.y - 2 * balleHauteur
+			tir1X = self.x + (self.largeur / 4) - (balleLargeur / 2)
+			tir2X = self.x + (3 * self.largeur / 4) - (balleLargeur / 2)
+			tirY = self.y - 2 * balleHauteur
 
-		tirDirection = -pi / 2  # part vers le haut
+			tirDirection = -pi / 2  # part vers le haut
 
-		tirVitesse = self.fenetre.getHauteur()
-		tirDegats = Personnage1.DEGATS
+			tirVitesse = self.fenetre.getHauteur()
+			tirDegats = Personnage1.DEGATS
 
-		tir1 = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur,
-										tir1X, tirY, PersonnageJouable.GROUPE, tirVitesse,
-										tirDegats, tirDirection)
-		tir2 = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur,
-										tir2X, tirY, PersonnageJouable.GROUPE, tirVitesse,
-										tirDegats, tirDirection)
+			tir1 = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur,
+											tir1X, tirY, PersonnageJouable.GROUPE, tirVitesse,
+											tirDegats, tirDirection)
+			tir2 = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur,
+											tir2X, tirY, PersonnageJouable.GROUPE, tirVitesse,
+											tirDegats, tirDirection)
 
-		tir3 = BalleHoming(self.fenetre, self.vue, balleLargeur, balleHauteur,
-										tir1X, tirY, PersonnageJouable.GROUPE, tirVitesse,
-										tirDegats)
+			tir3 = BalleHoming(self.fenetre, self.vue, balleLargeur, balleHauteur,
+											tir1X, tirY, PersonnageJouable.GROUPE, tirVitesse,
+											tirDegats)
 
 
-		self.vue.ajouteBalle(tir1)
-		self.vue.ajouteBalle(tir2)
-		self.vue.ajouteBalle(tir3)
+			self.vue.ajouteBalle(tir1)
+			self.vue.ajouteBalle(tir2)
+			self.vue.ajouteBalle(tir3)
+			self.timerTir = 1 / Personnage1.CADENCE_DE_TIR
 
 
 	def update(self, events: list[Event]):
@@ -81,8 +83,7 @@ class Personnage1(PersonnageJouable):
 		self.timerTir -= dt
 
 		if self.timerTir <= 0:
-			self.timerTir = 1 / Personnage1.CADENCE_DE_TIR
-			self.tire()
+			self.tire(events)
 
 
 
