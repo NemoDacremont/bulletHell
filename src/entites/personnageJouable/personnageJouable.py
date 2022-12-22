@@ -20,9 +20,11 @@ class PersonnageJouable(Personnage):
 	HITBOX_LARGEUR = 10
 	HITBOX_HAUTEUR = 10
 
-	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float,
-							x: float, y: float, PVMax: float, PV: float = -1, vitesse: float = 100,
-							coefRalentissementFocus: float = 0.3) -> None:
+	DUREE_IFRAME = 0.5
+
+	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float,
+		hauteur: float, x: float, y: float, PVMax: float, PV: float = -1,
+		vitesse: float = 100, coefRalentissementFocus: float = 0.3) -> None:
 		"""
 			Constructeur Personnage
 			Paramètres:
@@ -39,9 +41,14 @@ class PersonnageJouable(Personnage):
 				- coefRalentissementFocus: float, correspond au ralentissement lors de
 					l'action "focus"
 		"""
-		super().__init__(nom, fenetre, vue, largeur, hauteur, x, y, PVMax, PV, vitesse)
+		super().__init__(nom, fenetre, vue, largeur, hauteur, x, y, PVMax, PV,
+			vitesse)
 
 		self.nom = nom
+
+		# iframes
+		self.dureeIframe = PersonnageJouable.DUREE_IFRAME
+		self.timerIframe = 0
 
 		# Compteurs pour utiliser
 		self.toucheFocus = 0
@@ -57,6 +64,12 @@ class PersonnageJouable(Personnage):
 		self.hitbox = pygame.Rect(x, y, PersonnageJouable.HITBOX_LARGEUR,
 														PersonnageJouable.HITBOX_HAUTEUR)
 
+
+	def recoitDegats(self, degats: float):
+		# Ne prend des dégats que si il n'a pas d'iframe
+		if self.timerIframe <= 0:
+			super().recoitDegats(degats)
+			self.timerIframe = self.dureeIframe
 
 	def updateAppuiDeTouche(self, event: Event):
 		# On met à jour les compteurs de touches pour les déplacements
@@ -76,6 +89,7 @@ class PersonnageJouable(Personnage):
 			if touche in PersonnageJouable.TOUCHES_FOCUS:
 				self.toucheFocus += 1
 
+
 	def updateRelachementTouche(self, event: Event):
 		# Détecte le relâchement d'une touche
 		if event.type == pygame.KEYUP:
@@ -91,6 +105,16 @@ class PersonnageJouable(Personnage):
 
 			if touche in PersonnageJouable.TOUCHES_FOCUS:
 				self.toucheFocus -= 1
+
+
+	def updateHitbox(self):
+		# On réécrit sur la hitbox
+		centreX, centreY = self.getPositionCentre()
+		hitboxX = centreX - PersonnageJouable.HITBOX_LARGEUR / 2
+		hitboxY = centreY - PersonnageJouable.HITBOX_HAUTEUR / 2
+
+		self.hitbox = pygame.Rect(hitboxX, hitboxY, PersonnageJouable.HITBOX_LARGEUR,
+														PersonnageJouable.HITBOX_HAUTEUR)
 
 
 	def deplacements(self, event: Event):
@@ -120,20 +144,14 @@ class PersonnageJouable(Personnage):
 		else:
 			self.vx = 0
 
+
 	def update(self, events: list[Event]):
-		# Détecte les entrées de l'utilisateur
+		# Détecte les entrées de l'utilisateur, met à jour ainsi la vitesse
 		for event in events:
 			self.deplacements(event)
 
 		# met à jour la position
 		super().update(events)
-		# On réécrit sur la hitbox
-		centreX, centreY = self.getPositionCentre()
-		hitboxX = centreX - PersonnageJouable.HITBOX_LARGEUR / 2
-		hitboxY = centreY - PersonnageJouable.HITBOX_HAUTEUR / 2
-
-		self.hitbox = pygame.Rect(hitboxX, hitboxY, PersonnageJouable.HITBOX_LARGEUR,
-														PersonnageJouable.HITBOX_HAUTEUR)
 
 		# On empêche le joueur de sortir de l'écran
 		fenetreLargeur = self.fenetre.getLargeur()
@@ -147,9 +165,28 @@ class PersonnageJouable(Personnage):
 		if self.y > fenetreHauteur - self.hauteur:
 			self.y = fenetreHauteur - self.hauteur
 
+		# Après la mise à jour de la position, la hitbox
+		self.updateHitbox()
+
+		# Update des timers
+		dt = self.vue.getDT()
+		self.timerIframe -= dt
+
+		if self.timerIframe <= 0:  # On bloque le timer à 0 si il est à 0
+			self.timerIframe = 0
+
 
 	def drawHitbox(self):
 		self.fenetre.getFenetre().fill(PersonnageJouable.HITBOX_COLOR, self.hitbox)
+
+
+	def drawInterface(self):
+		GREEN = 0, 255, 0
+		fenetreLargeur, fenetreHauteur = self.fenetre.getDimensions()
+		hauteur = 100 * (self.PV / self.PVMax)
+		largeur = 30
+		life = pygame.Rect(10, fenetreHauteur - 10 - hauteur, largeur, hauteur)
+		pygame.draw.rect(self.fenetre.getFenetre(), GREEN, life)
 
 
 	def draw(self):

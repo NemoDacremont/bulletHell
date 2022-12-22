@@ -14,7 +14,11 @@ class Jeu():
 		# le jeu est en train de fonctionner
 		self.tourne = True
 
-		# Créé le joueur
+		# clock, pour les fps
+		self.clock: pygame.time.Clock = pygame.time.Clock()
+		self.dt: float = -1  # valeur par défaut, sera mise à jour à la première update
+
+		# Créé le joueur, pas sur de garder ce truc
 		self.joueur = None
 
 		# Créé les vues
@@ -22,6 +26,13 @@ class Jeu():
 
 		self.vues: list[Vue] = [vue]
 		self.vueCourrante: int = 0
+
+		pygame.display.init()
+		pygame.font.init()
+		print("default font:", pygame.font.get_default_font())
+		# print("available fonts:", pygame.font.get_fonts())
+
+		self.font = pygame.font.SysFont("sans", 16)
 
 
 
@@ -38,6 +49,10 @@ class Jeu():
 		self.vueCourrante = indiceVue
 		return True
 
+	def getDT(self) -> float:
+		return self.dt
+
+
 	def stopGame(self):
 		"""
 			Arrête le jeu
@@ -49,6 +64,9 @@ class Jeu():
 			Boucle principale du jeu
 		"""
 		while self.tourne:
+			# convertit en secondes
+			self.dt = self.clock.tick(self.fenetre.fps) / 1000
+
 			# Racourci de notation
 			vue = self.vues[self.vueCourrante]
 
@@ -63,8 +81,21 @@ class Jeu():
 			vue.update(events)
 			vue.draw()
 
+			# AFfiche les fps (plus compliqué que prévu mdr
+			fps = int(1 / self.getDT())
+			WHITE = 255, 255, 255
+
+			fenetreLargeur = self.fenetre.getLargeur()
+
+			surface = self.font.render(f"fps: {fps}", True, WHITE)
+			writeRect = pygame.Rect(fenetreLargeur - surface.get_width() - 10,
+				10, surface.get_width(), surface.get_height())
+
+			self.fenetre.getFenetre().blit(surface, writeRect)
+
+
+
+
+
 			# on met à jour le visuel
 			pygame.display.flip()
-
-
-

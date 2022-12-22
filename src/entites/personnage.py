@@ -54,7 +54,10 @@ class Personnage(Entite):
 
 	def recoitDegats(self, degats: float):
 		self.PV -= degats
-		print(f"{self.nom} prend des dégats: il lui reste {self.PV} PVs")
+
+
+	def drawInterface(self):
+		pass
 
 
 	def update(self, events: list[Event]):

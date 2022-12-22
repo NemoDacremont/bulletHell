@@ -36,7 +36,7 @@ class BalleCirculaire(Balle):
 		"""
 
 		super().__init__(BalleCirculaire.NOM, fenetre, vue, largeur, hauteur, x, y,
-									groupe, degats)
+			groupe, degats)
 
 		self.theta = theta
 
@@ -59,7 +59,7 @@ class BalleCirculaire(Balle):
 		self.r = sqrt((self.x - self.x0)**2 + (self.y - self.y0)**2)
 
 		# calcule theta
-		dt = 1 / self.fenetre.fps
+		dt = self.vue.getDT()
 		self.theta += self.v_theta * dt
 
 		# Histoire de rendre la formule buvable
@@ -81,7 +81,7 @@ class BalleCirculaire(Balle):
 		self.calculeVitesse()
 		super().update()
 
-		dt = 1 / self.fenetre.fps
+		dt = self.vue.getDT()
 		dv = sqrt(self.vx**2 + self.vy**2) * dt
 		self.distanceParcourue += dv
 

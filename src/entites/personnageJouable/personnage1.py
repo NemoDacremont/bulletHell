@@ -24,10 +24,10 @@ class Personnage1(PersonnageJouable):
 
 	# caractéristiques
 	PV_MAX = 10
-	VITESSE = 100
+	VITESSE = 500
 	COEF_RALENTISSEMENT_FOCUS = 0.3
 
-	CADENCE_DE_TIR = 3
+	CADENCE_DE_TIR = 10
 	DEGATS = 1
 
 	def __init__(self, fenetre: Fenetre, vue: Vue, x: float, y: float) -> None:
@@ -54,7 +54,7 @@ class Personnage1(PersonnageJouable):
 
 		tirDirection = -pi / 2  # part vers le haut
 
-		tirVitesse = 200
+		tirVitesse = self.fenetre.getHauteur()
 		tirDegats = Personnage1.DEGATS
 
 		tir1 = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur,
@@ -65,7 +65,7 @@ class Personnage1(PersonnageJouable):
 										tirDegats, tirDirection)
 
 		tir3 = BalleHoming(self.fenetre, self.vue, balleLargeur, balleHauteur,
-										tir1X, tirY, PersonnageJouable.GROUPE, tirVitesse / 2,
+										tir1X, tirY, PersonnageJouable.GROUPE, tirVitesse,
 										tirDegats)
 
 
@@ -77,7 +77,7 @@ class Personnage1(PersonnageJouable):
 	def update(self, events: list[Event]):
 		super().update(events)
 
-		dt = 1 / self.fenetre.fps
+		dt = self.vue.getDT()
 		self.timerTir -= dt
 
 		if self.timerTir <= 0:

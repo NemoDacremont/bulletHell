@@ -11,13 +11,14 @@ if TYPE_CHECKING:
 	from pygame.event import Event
 	from entites.personnage import Personnage
 	from entites.personnageJouable.personnageJouable import PersonnageJouable
+	from jeu import Jeu
 
 
 class Vue:
 	ETAT_PAUSE = 1
 	ETAT_NORMAL = 0
 
-	def __init__(self, jeu, etat: int, pausePossible: bool) -> None:
+	def __init__(self, jeu: Jeu, etat: int, pausePossible: bool) -> None:
 		self.jeu = jeu
 		self.fenetre = jeu.fenetre
 
@@ -31,6 +32,10 @@ class Vue:
 
 		self.entites: list[Entite] = []
 		# self.entitesAAfficher: list[Entite] = []
+
+
+	def getDT(self) -> float:
+		return self.jeu.getDT()
 
 
 	def getPersonnages(self):
@@ -50,6 +55,8 @@ class Vue:
 
 
 	def update(self, events: list[Event]):
+		self.dt = self.jeu.dt
+
 		# Update les entites
 		for i in range(len(self.entites) - 1, - 1, - 1):
 			entite = self.entites[i]
@@ -95,6 +102,10 @@ class Vue:
 		# Finalement, affiche les hitbox des joueurs au dessus des balles ...
 		for joueur in self.joueurs:
 			joueur.drawHitbox()
+
+		# Affiche les hps de personnages
+		for personnage in self.personnages:
+			personnage.drawInterface()
 
 
 

@@ -9,6 +9,7 @@ if TYPE_CHECKING:
 	from entites.ennemis.boss.phase import Phase
 
 from entites.ennemis.ennemi import Ennemi
+import pygame
 
 
 class Boss(Ennemi):
@@ -34,6 +35,13 @@ class Boss(Ennemi):
 		phase = self.phases[self.phaseCourrante]
 		phase.recoitDegats(degats)
 
+
+	def drawInterface(self):
+		RED = 255, 0, 0
+		hauteur = 30
+		largeur = 100 * (self.PV / self.PVMax)
+		life = pygame.Rect(10, 10, largeur, hauteur)
+		pygame.draw.rect(self.fenetre.getFenetre(), RED, life)
 
 
 	def changePhase(self):

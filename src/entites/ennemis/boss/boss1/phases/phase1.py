@@ -12,7 +12,7 @@ from entites.ennemis.ennemi import Ennemi
 
 
 class Boss1Phase1(Phase):
-	CADENCE_DE_TIR = 1
+	CADENCE_DE_TIR = 10
 
 	PV = 2000
 
@@ -59,7 +59,7 @@ class Boss1Phase1(Phase):
 
 		tirDirection = pi / 2  # part vers le bas
 
-		tirVitesse = 50
+		tirVitesse = self.fenetre.getHauteur() / 2
 		tirDegats = 1
 
 		balle = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur,
@@ -76,12 +76,12 @@ class Boss1Phase1(Phase):
 			tirY0 = y0 - balleHauteur / 2
 
 			theta = i * (pi / 3)
-			v_r = 7
-			v_theta = pi / 10
+			v_r = self.fenetre.getHauteur() / 10
+			v_theta = pi
 
 			balle = BalleCirculaire(self.fenetre, self.vue, balleLargeur, balleHauteur,
-													tirX0, tirY0, Ennemi.GROUPE, tirDegats,
-													theta, v_r, v_theta)
+				tirX0, tirY0, Ennemi.GROUPE, tirDegats,
+				theta, v_r, v_theta)
 
 			self.vue.ajouteBalle(balle)
 
@@ -95,7 +95,7 @@ class Boss1Phase1(Phase):
 		self.deplacements()
 
 		# Tirs
-		dt = 1 / self.fenetre.fps
+		dt = self.vue.getDT()
 		self.timerTir -= dt
 
 		if self.timerTir <= 0:
