@@ -1,13 +1,21 @@
+# importations bizarre, permet d'importer les types sans avoir
+# d'erreures d'importations circulaires
+from __future__ import annotations
+from typing import TYPE_CHECKING
 
-from entites.ennemis.boss1 import Boss1
-from entites.entite import Entite
+if TYPE_CHECKING:
+	from jeu import Jeu
+
+
+from vues.vue import Vue
 from entites.personnage import Personnage
 from entites.personnageJouable.personnage1 import Personnage1
-from vues.vue import Vue
+from entites.ennemis.boss.boss1.boss1 import Boss1
+
 
 
 class VueBoss(Vue):
-	def __init__(self, jeu, etat: int, pausePossible: bool) -> None:
+	def __init__(self, jeu: Jeu, etat: int, pausePossible: bool) -> None:
 		# Constructeur Vue
 		super().__init__(jeu, etat, pausePossible)
 
@@ -36,18 +44,19 @@ class VueBoss(Vue):
 														coefRalentissementFocus=coefRalentissementFocus)
 		"""
 
-		joueur = Personnage1(self.fenetre, self, 0, 0)
+		fenetreLargeur, fenetreHauteur = jeu.fenetre.getDimensions()
+
+		# Joueur
+		joueurX = fenetreLargeur / 2
+		joueurY = fenetreHauteur / 2
+
+		joueur = Personnage1(self.fenetre, self, joueurX, joueurY)
 
 		#  Création d'un ennemi
-		ennemiPVMax = 100
 		ennemiX = 50
 		ennemiY = 50
-		ennemiLargeur = 40
-		ennemiHauteur = 40
-		ennemiVitesse = 20
 
-		ennemi = Boss1(self.fenetre, self, ennemiLargeur, ennemiHauteur,
-									ennemiX, ennemiY, ennemiPVMax, vitesse=ennemiVitesse)
+		ennemi = Boss1(self.fenetre, self, ennemiX, ennemiY)
 
 		self.personnages: list[Personnage] = [joueur, ennemi]
 
