@@ -9,7 +9,6 @@ if TYPE_CHECKING:
 	from fenetre import Fenetre
 	from vues.vue import Vue
 
-from entites.balles.balleCirculaire import BalleCirculaire
 from entites.personnageJouable.personnageJouable import PersonnageJouable
 from entites.balles.balleDroite import BalleDroite
 from entites.balles.balleHoming import BalleHoming
@@ -28,7 +27,7 @@ class Personnage1(PersonnageJouable):
 	VITESSE = 100
 	COEF_RALENTISSEMENT_FOCUS = 0.3
 
-	CADENCE_DE_TIR = 6
+	CADENCE_DE_TIR = 3
 	DEGATS = 1
 
 	def __init__(self, fenetre: Fenetre, vue: Vue, x: float, y: float) -> None:
@@ -68,23 +67,6 @@ class Personnage1(PersonnageJouable):
 		tir3 = BalleHoming(self.fenetre, self.vue, balleLargeur, balleHauteur,
 										tir1X, tirY, PersonnageJouable.GROUPE, tirVitesse / 2,
 										tirDegats)
-
-
-		for i in range(6):
-			x0, y0 = self.getPositionCentre()
-
-			tirX0 = x0 - balleLargeur / 2
-			tirY0 = y0 - balleHauteur / 2
-
-			theta = i * (pi / 3)
-			v_r = 5
-			v_theta = pi / 3
-
-			balle = BalleCirculaire(self.fenetre, self.vue, balleLargeur, balleHauteur,
-													tirX0, tirY0, PersonnageJouable.GROUPE, tirDegats,
-													theta, v_r, v_theta)
-
-			self.vue.ajouteBalle(balle)
 
 
 		self.vue.ajouteBalle(tir1)

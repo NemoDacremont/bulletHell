@@ -32,7 +32,7 @@ class Personnage(Entite):
 		"""
 		super().__init__(nom, fenetre, vue, largeur, hauteur, x, y)
 
-		# groupe par défaut: 0~:while
+		# groupe par défaut: 0
 		self.groupe = 0
 
 		# PVs

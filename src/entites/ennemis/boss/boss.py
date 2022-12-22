@@ -11,7 +11,6 @@ if TYPE_CHECKING:
 from entites.ennemis.ennemi import Ennemi
 
 
-
 class Boss(Ennemi):
 	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float,
 		hauteur: float, x: float, y: float, PVMax: float, PV: float = -1,
@@ -29,3 +28,17 @@ class Boss(Ennemi):
 		self.vy: float = 0
 
 
+	def recoitDegats(self, degats: float):
+		super().recoitDegats(degats)
+
+		phase = self.phases[self.phaseCourrante]
+		phase.recoitDegats(degats)
+
+
+
+	def changePhase(self):
+		if self.phaseCourrante < len(self.phases) - 1:
+			self.phaseCourrante += 1
+
+		if self.PV < 0:
+			self.retire()

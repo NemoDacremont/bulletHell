@@ -4,11 +4,13 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
+
 if TYPE_CHECKING:
 	from entites.balles.balle import Balle
 	from entites.entite import Entite
 	from pygame.event import Event
 	from entites.personnage import Personnage
+	from entites.personnageJouable.personnageJouable import PersonnageJouable
 
 
 class Vue:
@@ -24,6 +26,8 @@ class Vue:
 
 		self.balles: list[Balle] = []
 		self.personnages: list[Personnage] = []
+
+		self.joueurs: list[PersonnageJouable] = []
 
 		self.entites: list[Entite] = []
 		# self.entitesAAfficher: list[Entite] = []
@@ -80,13 +84,18 @@ class Vue:
 		for entite in self.entites:
 			entite.draw()
 
+		# Affiche les personnages
+		for personnage in self.personnages:
+			personnage.draw()
+
 		# Affiche les balles
 		for balle in self.balles:
 			balle.draw()
 
-		# Affiche les personnages
-		for personnage in self.personnages:
-			personnage.draw()
+		# Finalement, affiche les hitbox des joueurs au dessus des balles ...
+		for joueur in self.joueurs:
+			joueur.drawHitbox()
+
 
 
 

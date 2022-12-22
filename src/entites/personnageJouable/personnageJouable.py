@@ -148,12 +148,13 @@ class PersonnageJouable(Personnage):
 			self.y = fenetreHauteur - self.hauteur
 
 
+	def drawHitbox(self):
+		self.fenetre.getFenetre().fill(PersonnageJouable.HITBOX_COLOR, self.hitbox)
+
 
 	def draw(self):
 		self.rectAffichage = pygame.Rect(self.x, self.y, self.largeur, self.hauteur)
 		self.fenetre.getFenetre().fill(Personnage.COLOR, self.rectAffichage)
-
-		self.fenetre.getFenetre().fill(PersonnageJouable.HITBOX_COLOR, self.hitbox)
 
 
 

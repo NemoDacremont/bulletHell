@@ -47,19 +47,22 @@ class VueBoss(Vue):
 		fenetreLargeur, fenetreHauteur = jeu.fenetre.getDimensions()
 
 		# Joueur
-		joueurX = fenetreLargeur / 2
+		joueurX = fenetreLargeur / 4
 		joueurY = fenetreHauteur / 2
 
 		joueur = Personnage1(self.fenetre, self, joueurX, joueurY)
 
 		#  Création d'un ennemi
-		ennemiX = 50
+		ennemiX = fenetreLargeur / 2
 		ennemiY = 50
 
 		ennemi = Boss1(self.fenetre, self, ennemiX, ennemiY)
 
+		# Création des listes
 		self.personnages: list[Personnage] = [joueur, ennemi]
+		self.joueurs = [joueur]
 
+		# Gadget
 		for personnage in self.personnages:
 			print(personnage.nom)
 

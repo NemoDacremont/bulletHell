@@ -1,6 +1,7 @@
 
 # maths, cool
 from math import pi
+from entites.balles.balleCirculaire import BalleCirculaire
 from entites.balles.balleDroite import BalleDroite
 
 # classes
@@ -13,8 +14,10 @@ from entites.ennemis.ennemi import Ennemi
 class Boss1Phase1(Phase):
 	CADENCE_DE_TIR = 1
 
+	PV = 2000
+
 	def __init__(self, boss: Boss) -> None:
-		super().__init__(boss)
+		super().__init__(boss, Boss1Phase1.PV)
 
 		self.fenetre = self.boss.fenetre
 		self.vue = self.boss.vue
@@ -22,10 +25,13 @@ class Boss1Phase1(Phase):
 		# Cadence de tir
 		self.timerTir = 1 / Boss1Phase1.CADENCE_DE_TIR
 
+
 	def deplacements(self):
 		boss = self.boss
-		fenetre = self.fenetre
 
+		boss.vx = 0
+		boss.vy = 0
+		"""
 		# Si à gauche de l'écran: va à droite, ne peut pas sortir de l'écran
 		if boss.x < 0:
 			boss.x = 0
@@ -35,9 +41,11 @@ class Boss1Phase1(Phase):
 		if boss.x > fenetre.largeur - boss.largeur:
 			boss.x = fenetre.largeur - boss.largeur
 			boss.vx = -boss.vitesse
+		"""
 
 
 	def tire(self):
+		# #  Balle Droite
 		# pour un peu plus de lisibilité
 		boss = self.boss
 
@@ -51,7 +59,7 @@ class Boss1Phase1(Phase):
 
 		tirDirection = pi / 2  # part vers le bas
 
-		tirVitesse = 100
+		tirVitesse = 50
 		tirDegats = 1
 
 		balle = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur,
@@ -60,7 +68,29 @@ class Boss1Phase1(Phase):
 
 		self.vue.ajouteBalle(balle)
 
+		# # Balle circulaires
+		for i in range(6):
+			x0, y0 = boss.getPositionCentre()
+
+			tirX0 = x0 - balleLargeur / 2
+			tirY0 = y0 - balleHauteur / 2
+
+			theta = i * (pi / 3)
+			v_r = 7
+			v_theta = pi / 10
+
+			balle = BalleCirculaire(self.fenetre, self.vue, balleLargeur, balleHauteur,
+													tirX0, tirY0, Ennemi.GROUPE, tirDegats,
+													theta, v_r, v_theta)
+
+			self.vue.ajouteBalle(balle)
+
+
+
 	def update(self):
+		# lisibilité
+		boss = self.boss
+
 		# Déplacements
 		self.deplacements()
 
@@ -71,6 +101,10 @@ class Boss1Phase1(Phase):
 		if self.timerTir <= 0:
 			self.timerTir = 1 / Boss1Phase1.CADENCE_DE_TIR
 			self.tire()
+
+		# Change de phase
+		if self.pv < 0:
+			boss.changePhase()
 
 
 
