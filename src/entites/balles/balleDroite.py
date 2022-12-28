@@ -15,8 +15,8 @@ class BalleDroite(Balle):
 	NOM = "balleDroite"
 
 	def __init__(self, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float,
-							x: float, y: float, groupe: int, vitesse: float, degats: float,
-							direction: float) -> None:
+		x: float, y: float, groupe: int, vitesse: float, degats: float,
+		direction: float) -> None:
 		"""
 			Constructeur de BalleDroite
 			Paramètres:
@@ -35,7 +35,7 @@ class BalleDroite(Balle):
 		"""
 
 		super().__init__(BalleDroite.NOM, fenetre, vue, largeur, hauteur, x, y,
-									groupe, degats)
+			groupe, degats)
 
 		self.direction = direction
 		self.vy = sin(direction) * vitesse
