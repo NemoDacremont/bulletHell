@@ -72,7 +72,7 @@ class Boss1Phase2(Phase):
 
 			tir1X = boss.x + (boss.largeur / 2) - (balleLargeur / 2)
 			# La balle apparait en dessous du boss
-			tirY = boss.y + boss.hauteur + 2 * balleHauteur
+			tirY = boss.y + (boss.hauteur / 2) - (balleHauteur / 2)
 
 			tirVitesse = self.fenetre.getHauteur() / 2
 			tirDegats = 1
@@ -103,7 +103,7 @@ class Boss1Phase2(Phase):
 				# La balle apparait en dessous du boss
 				tirY = boss.y + boss.hauteur + 2 * balleHauteur
 	
-				tirVitesse = self.fenetre.getHauteur() / 5
+				tirVitesse = self.fenetre.getHauteur() / 6
 				tirDegats = 1	
 				
 				balle = BalleDroiteContinuum(self.fenetre, self.vue, balleLargeur, balleHauteur,

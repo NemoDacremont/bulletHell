@@ -12,6 +12,7 @@ from math import cos, sin
 
 class BalleDroiteContinuum(Balle):
 	NOM = "balleDroiteContinuum"
+	COLOR = 0, 0, 255 #Bleu
 
 	def __init__(self, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float,
 		x: float, y: float, groupe: int, vitesse: float, degats: float,
@@ -34,7 +35,7 @@ class BalleDroiteContinuum(Balle):
 		"""
 
 		super().__init__(BalleDroiteContinuum.NOM, fenetre, vue, largeur, hauteur, x, y,
-			groupe, degats)
+			groupe, degats, BalleDroiteContinuum.COLOR)
 
 		self.direction = direction
 		self.vy = sin(direction) * vitesse
