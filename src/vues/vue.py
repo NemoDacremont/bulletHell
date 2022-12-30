@@ -103,9 +103,13 @@ class Vue:
 		for joueur in self.joueurs:
 			joueur.drawHitbox()
 
-		# Affiche les hps de personnages
+		# Affiche les hps de personnages, idéalement on voudrait juste le joueur et
+		# le boss
 		for personnage in self.personnages:
 			personnage.drawInterface()
+
+		# Affichage des fps parce que j'ai raison
+		
 
 
 

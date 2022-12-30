@@ -25,6 +25,9 @@ class Boss1Phase1(Phase):
 		# Cadence de tir
 		self.timerTir = 1 / Boss1Phase1.CADENCE_DE_TIR
 
+		self.dephasage = 0
+		self.vdephasage = pi / 10
+
 
 	def deplacements(self):
 		boss = self.boss
@@ -75,7 +78,7 @@ class Boss1Phase1(Phase):
 			tirX0 = x0 - balleLargeur / 2
 			tirY0 = y0 - balleHauteur / 2
 
-			theta = i * (pi / 3)
+			theta = i * (pi / 3) + self.dephasage
 			v_r = self.fenetre.getHauteur() / 10
 			v_theta = pi
 
@@ -84,6 +87,8 @@ class Boss1Phase1(Phase):
 				theta, v_r, v_theta)
 
 			self.vue.ajouteBalle(balle)
+
+			self.dephasage += self.vdephasage
 
 
 
