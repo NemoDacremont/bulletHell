@@ -40,6 +40,9 @@ class Vue:
 
 	def getPersonnages(self):
 		return self.personnages
+	
+	def getJoueurs(self):
+		return self.joueurs
 
 
 	def ajouteEntites(self, entite: Entite):
