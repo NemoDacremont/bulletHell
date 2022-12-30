@@ -19,8 +19,8 @@ class Boss1Phase2(Phase):
 	NB_BALLES = 36
 	
 	#Mouvement
-	DUREE = 10
-	VITESSE = 10
+	DUREE = 3
+	VITESSE = 1000
 
 	PV = 2000
 
@@ -36,7 +36,7 @@ class Boss1Phase2(Phase):
 		self.timerTir = 1 / Boss1Phase2.CADENCE_DE_TIR
 		
 		self.etat = 0 #0 : rien faire ; 1 : fonce sur le joueur ; 2 : attaque
-		self.xJ, self.yJ = boss.vue.getJoueurs()[0].getPositionCentre()
+		self.xJ, self.yJ = None, None
 
 
 	def deplacements(self, xJ = None, yJ = None):
@@ -47,8 +47,8 @@ class Boss1Phase2(Phase):
 		
 		#Fonce sur le joueur
 		if self.etat == 1:
-			boss.vx = Boss1Phase2.VITESSE * (x - xJ) / sqrt((x - xJ) ** 2 + (y - yJ) ** 2)
-			boss.vy = Boss1Phase2.VITESSE * (y - yJ) / sqrt((x - xJ) ** 2 + (y - yJ) ** 2)
+			boss.vx = - 1 * Boss1Phase2.VITESSE * (x - xJ) / sqrt((x - xJ) ** 2 + (y - yJ) ** 2)
+			boss.vy = -1 * Boss1Phase2.VITESSE * (y - yJ) / sqrt((x - xJ) ** 2 + (y - yJ) ** 2)
 		
 		else:
 			boss.vx = 0
@@ -68,7 +68,7 @@ class Boss1Phase2(Phase):
 			# variables de la balle
 			balleLargeur = 10
 			balleHauteur = 10
-			tirDirection = phase(boss.vx + 1j * boss.vy) + pi / 6 * random() - pi / 12
+			tirDirection = pi / 2 +phase(boss.vx + 1j * boss.vy) + pi / 6 * random() - pi / 12
 
 			tir1X = boss.x + (boss.largeur / 2) - (balleLargeur / 2)
 			# La balle apparait en dessous du boss
@@ -103,12 +103,12 @@ class Boss1Phase2(Phase):
 				# La balle apparait en dessous du boss
 				tirY = boss.y + boss.hauteur + 2 * balleHauteur
 	
-				tirVitesse = self.fenetre.getHauteur() / 2
+				tirVitesse = self.fenetre.getHauteur() / 5
 				tirDegats = 1	
 				
 				balle = BalleDroiteContinuum(self.fenetre, self.vue, balleLargeur, balleHauteur,
 					  tir1X, tirY, Ennemi.GROUPE, tirVitesse, tirDegats,
-					  tirDirection, 1)
+					  tirDirection, 2)
 				
 				self.vue.ajouteBalle(balle)
 			
@@ -134,10 +134,10 @@ class Boss1Phase2(Phase):
 		# Chgt état
 		if self.etat == 0 and self.timerAttente <= 0:
 			self.etat = 1
-			self.xJ, self.yJ = boss.vue.getJoueurs()[0].getPositionCentre
+			self.xJ, self.yJ = boss.vue.getJoueurs()[0].getPositionCentre()
 			self.timerAttente = Boss1Phase2.DUREE
 		
-		elif self.etat == 1 and abs(self.xJ - boss.x + 1j * (self.yJ - boss.y)) < Boss1Phase2.VITESSE:
+		elif self.etat == 1 and abs(self.xJ - boss.x + 1j * (self.yJ - boss.y)) < Boss1Phase2.VITESSE / 10:
 			self.etat = 2
 		
 
