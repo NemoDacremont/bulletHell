@@ -108,7 +108,7 @@ class Boss1Phase1(Phase):
 			tirX0 = x0 - balleLargeur / 2
 			tirY0 = y0 - balleHauteur / 2
 
-			theta = i * (pi / 3)
+			theta = i * (pi / 3) + self.dephasage
 			v_r = self.fenetre.getHauteur() / 10
 			v_theta = pi
 
@@ -118,7 +118,6 @@ class Boss1Phase1(Phase):
 
 			self.vue.ajouteBalle(balle)
 		"""
-
 
 
 	def update(self):

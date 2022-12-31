@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 # classes ...
 from entites.ennemis.boss.boss import Boss
 from entites.ennemis.boss.boss1.phases.phase1 import Boss1Phase1
+from entites.ennemis.boss.boss1.phases.phase2 import Boss1Phase2
 
 
 class Boss1(Boss):
@@ -34,7 +35,7 @@ class Boss1(Boss):
 
 		# Définition des phases
 		self.phaseCourrante = 0
-		self.phases = [Boss1Phase1(self)]
+		self.phases = [Boss1Phase2(self)]
 
 
 	def update(self, events: list[Event]):

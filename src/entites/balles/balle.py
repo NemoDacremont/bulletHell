@@ -18,11 +18,12 @@ class Balle(Entite):
 
 	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float,
 							hauteur: float, x: float, y: float, groupe: int,
-							degats: float) -> None:
+							degats: float, couleur = (255, 0, 255)) -> None:
 		super().__init__(nom, fenetre, vue, largeur, hauteur, x, y)
 
 		self.groupe = groupe
 		self.degats = degats
+		self.color = couleur
 
 	def collision(self):
 		personnages = self.vue.getPersonnages()
@@ -47,6 +48,6 @@ class Balle(Entite):
 		fenetre = self.fenetre.getFenetre()
 		# On redéfini le rect pour qu'il ait la bonne origine
 		self.rect = pygame.Rect(self.x, self.y, self.largeur, self.hauteur)
-		fenetre.fill(Balle.COLOR, self.rect)
+		fenetre.fill(self.color, self.rect)
 
 
