@@ -8,10 +8,10 @@ from vues.vue import Vue
 
 
 class PersonnageJouable(Personnage):
-	TOUCHES_DEPLACEMENT_HAUT = [pygame.K_z]
-	TOUCHES_DEPLACEMENT_BAS = [pygame.K_s]
-	TOUCHES_DEPLACEMENT_GAUCHE = [pygame.K_q]
-	TOUCHES_DEPLACEMENT_DROITE = [pygame.K_d]
+	TOUCHES_DEPLACEMENT_HAUT = [pygame.K_z, pygame.K_UP]
+	TOUCHES_DEPLACEMENT_BAS = [pygame.K_s, pygame.K_DOWN]
+	TOUCHES_DEPLACEMENT_GAUCHE = [pygame.K_q, pygame.K_LEFT]
+	TOUCHES_DEPLACEMENT_DROITE = [pygame.K_d, pygame.K_RIGHT]
 
 	TOUCHES_FOCUS = [pygame.K_k]
 	TOUCHE_ATTAQUE = [pygame.K_o]

@@ -1,12 +1,14 @@
 # importations bizarre, permet d'importer les types sans avoir
 # d'erreures d'importations circulaires
 from __future__ import annotations
+from sys import path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
 	from jeu import Jeu
 
 
+import pygame
 from vues.vue import Vue
 from entites.personnage import Personnage
 from entites.personnageJouable.personnage1 import Personnage1
@@ -22,28 +24,7 @@ class VueBoss(Vue):
 		# Compteur pour connaître la phase actuelle
 		self.phase = 0
 
-		"""
-		## Création Personnage jouable
-		# Valeurs pour le personnage
-		joueurPVMax = 3
-		joueurX = 0
-		joueurY = 0
-		joueurLargeur = 50
-		joueurHauteur = 50
-
-		# de façon à ce que la vitesse soit suffisante pour parcourir en 10 sec le plus petit
-		# entre la largeur et la longueur
-		joueurVitesse = min(self.fenetre.getLargeur() / 10, self.fenetre.getHauteur() / 10)
-
-		# Un gros coef
-		coefRalentissementFocus = 0.2
-
-		# Créé le personnage
-		joueur = PersonnageJouable("moi", self.fenetre, self, joueurLargeur,
-														joueurHauteur, joueurX, joueurY, joueurPVMax, vitesse=joueurVitesse,
-														coefRalentissementFocus=coefRalentissementFocus)
-		"""
-
+		# Données cool
 		fenetreLargeur, fenetreHauteur = jeu.fenetre.getDimensions()
 
 		# Joueur
@@ -63,8 +44,18 @@ class VueBoss(Vue):
 		self.joueurs = [joueur]
 
 		# Gadget
+		print("Personnages: ")
 		for personnage in self.personnages:
 			print(personnage.nom)
+
+		# Sprites, tests
+		self.image = pygame.image.load("/home/odasta/Documents/programmation/python/prepa-2/bulletHell/src/assets/Ship_Nebula-Sprite_Sheet.png")
+
+	def draw(self):
+		super().draw()
+
+		self.fenetre.getFenetre().blit(self.image, (0, 0))
+
 
 
 
