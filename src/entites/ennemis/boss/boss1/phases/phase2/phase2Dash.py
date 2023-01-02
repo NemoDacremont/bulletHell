@@ -13,8 +13,10 @@ from entites.ennemis.ennemi import Ennemi
 
 
 
-class Boss1Phase2(Phase):
+class Boss1Phase2Dash(Phase):
 	
+	PV = 2000 #Evite des bug
+
 	CADENCE_DE_TIR = 10
 	NB_BALLES = 36
 	
@@ -22,18 +24,16 @@ class Boss1Phase2(Phase):
 	DUREE = 3
 	VITESSE = 1000
 
-	PV = 2000
-
 	def __init__(self, boss: Boss) -> None:
-		super().__init__(boss, Boss1Phase2.PV)
+		super().__init__(boss, Boss1Phase2Dash.PV)
 
 		self.fenetre = self.boss.fenetre
 		self.vue = self.boss.vue
 		
 
 		# Timer
-		self.timerAttente = Boss1Phase2.DUREE
-		self.timerTir = 1 / Boss1Phase2.CADENCE_DE_TIR
+		self.timerAttente = Boss1Phase2Dash.DUREE
+		self.timerTir = 1 / Boss1Phase2Dash.CADENCE_DE_TIR
 		
 		self.etat = 0 #0 : rien faire ; 1 : fonce sur le joueur ; 2 : attaque
 		self.xJ, self.yJ = None, None
@@ -47,8 +47,8 @@ class Boss1Phase2(Phase):
 		
 		#Fonce sur le joueur
 		if self.etat == 1:
-			boss.vx = - 1 * Boss1Phase2.VITESSE * (x - xJ) / sqrt((x - xJ) ** 2 + (y - yJ) ** 2)
-			boss.vy = -1 * Boss1Phase2.VITESSE * (y - yJ) / sqrt((x - xJ) ** 2 + (y - yJ) ** 2)
+			boss.vx = - 1 * Boss1Phase2Dash.VITESSE * (x - xJ) / sqrt((x - xJ) ** 2 + (y - yJ) ** 2)
+			boss.vy = -1 * Boss1Phase2Dash.VITESSE * (y - yJ) / sqrt((x - xJ) ** 2 + (y - yJ) ** 2)
 		
 		else:
 			boss.vx = 0
@@ -60,7 +60,7 @@ class Boss1Phase2(Phase):
 		
 		# pour un peu plus de lisibilité
 		boss = self.boss
-		n = Boss1Phase2.NB_BALLES
+		n = Boss1Phase2Dash.NB_BALLES
 		
 		# Balles droites de l'etat 1
 		if self.etat == 1:
@@ -135,9 +135,9 @@ class Boss1Phase2(Phase):
 		if self.etat == 0 and self.timerAttente <= 0:
 			self.etat = 1
 			self.xJ, self.yJ = boss.vue.getJoueurs()[0].getPositionCentre()
-			self.timerAttente = Boss1Phase2.DUREE
+			self.timerAttente = Boss1Phase2Dash.DUREE
 		
-		elif self.etat == 1 and abs(self.xJ - boss.x + 1j * (self.yJ - boss.y)) < Boss1Phase2.VITESSE / 10:
+		elif self.etat == 1 and abs(self.xJ - boss.x + 1j * (self.yJ - boss.y)) < Boss1Phase2Dash.VITESSE / 10:
 			self.etat = 2
 		
 
@@ -146,7 +146,7 @@ class Boss1Phase2(Phase):
 		self.timerTir -= dt
 
 		if self.timerTir <= 0:
-			self.timerTir = 1 / Boss1Phase2.CADENCE_DE_TIR
+			self.timerTir = 1 / Boss1Phase2Dash.CADENCE_DE_TIR
 			self.tire()
 
 		# Change de phase
