@@ -49,12 +49,12 @@ class VueBoss(Vue):
 			print(personnage.nom)
 
 		# Sprites, tests
-		self.image = pygame.image.load("/home/odasta/Documents/programmation/python/prepa-2/bulletHell/src/assets/Ship_Nebula-Sprite_Sheet.png")
+		#self.image = pygame.image.load("/home/odasta/Documents/programmation/python/prepa-2/bulletHell/src/assets/Ship_Nebula-Sprite_Sheet.png")
 
 	def draw(self):
 		super().draw()
 
-		self.fenetre.getFenetre().blit(self.image, (0, 0))
+		#self.fenetre.getFenetre().blit(self.image, (0, 0))
 
 
 
