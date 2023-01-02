@@ -7,17 +7,23 @@ if TYPE_CHECKING:
 	from fenetre import Fenetre
 	from vues.vue import Vue
 
-from math import cos, sin
 from entites.balles.balle import Balle
+from math import cos, sin
 
+"""
+Balle Hubble
+------------
 
+Une balle fondée sur la loi de Hubble qui dit que les galaxies ont une vitesse
+d'éloignement proportionnelle à leur distance.
 
-class BalleDroite(Balle):
-	NOM = "balleDroite"
+v = Hr
+"""
 
-	def __init__(self, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float,
-		x: float, y: float, groupe: int, vitesse: float, degats: float,
-		direction: float) -> None:
+class balleHubble():
+	NOM = "balleHbble"
+
+	def __init__(self, balle, ref, H) -> None:
 		"""
 			Constructeur de BalleDroite
 			Paramètres:
@@ -35,12 +41,10 @@ class BalleDroite(Balle):
 					entre \vec x et \vec y
 		"""
 
-		super().__init__(BalleDroite.NOM, fenetre, vue, largeur, hauteur, x, y,
-			groupe, degats)
 
-		self.direction = direction
-		self.vy = sin(direction) * vitesse
-		self.vx = cos(direction) * vitesse
+		self.balle = balle
+		self.H = H
+		self.ref = ref
 
 
 	def update(self):
@@ -50,7 +54,7 @@ class BalleDroite(Balle):
 			modifier la vitesse
 		"""
 
-		super().update()
+		
 
 		# Si la balle sort de l'écran, on la retire
 		h, k = self.fenetre.getDimensions()
@@ -59,7 +63,8 @@ class BalleDroite(Balle):
 			self.retire()
 		
 		if self.y > k + self.hauteur:
-			self.retire()
+			if self.continuum <= 0:
+				self.retire()
 		
 		if self.x > h + self.hauteur:
 			self.retire()
@@ -67,4 +72,3 @@ class BalleDroite(Balle):
 
 		if self.x < -self.hauteur:
 			self.retire()
-

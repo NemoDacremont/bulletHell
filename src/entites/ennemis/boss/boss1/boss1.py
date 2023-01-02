@@ -10,8 +10,8 @@ if TYPE_CHECKING:
 
 # classes ...
 from entites.ennemis.boss.boss import Boss
-from entites.ennemis.boss.boss1.phases.phase1 import Boss1Phase1
-from entites.ennemis.boss.boss1.phases.phase2 import Boss1Phase2
+from entites.ennemis.boss.boss1.phases.phase1.phase1 import Boss1Phase1
+from entites.ennemis.boss.boss1.phases.phase2.phase2 import Boss1Phase2
 
 
 class Boss1(Boss):
