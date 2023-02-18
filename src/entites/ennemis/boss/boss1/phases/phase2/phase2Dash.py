@@ -94,38 +94,39 @@ class Boss1Phase2Dash(Phase):
 		# Balles continuum pour l'état 2
 		if self.etat == 2 :
 			
-			for i in range(n):
-# 				# variables de la balle
-# 				balleLargeur = 10
-# 				balleHauteur = 10
-# 				tirDirection = 2 * pi * i / n
-# 	
-# 				tir1X = boss.x + (boss.largeur / 2) - (balleLargeur / 2)
-# 				# La balle apparait en dessous du boss
-# 				tirY = boss.y + boss.hauteur + 2 * balleHauteur
-# 	
-# 				tirVitesse = self.fenetre.getHauteur() / 6
-# 				tirDegats = 1	
-# 				
-# 				balle = BalleDroiteContinuum(self.fenetre, self.vue, balleLargeur, balleHauteur,
-# 					  tir1X, tirY, Ennemi.GROUPE, tirVitesse, tirDegats,
-# 					  tirDirection, 2)
+                        for i in range(n):
+ 			        # variables de la balle
+                                balleLargeur = 10
+                                balleHauteur = 10
+                                tirDirection = 2 * pi * i / n
+ 	                        
+                                tir1X = boss.x + (boss.largeur / 2) - (balleLargeur / 2)
+ 			        # La balle apparait en dessous du boss
+                                tirY = boss.y + boss.hauteur + 2 * balleHauteur
+ 	                        
+                                tirVitesse = self.fenetre.getHauteur() / 6
+                                tirDegats = 1	
+ 			        
+                                balle = BalleDroiteContinuum(self.fenetre, self.vue, balleLargeur, balleHauteur,
+ 					                     tir1X, tirY, Ennemi.GROUPE, tirVitesse, tirDegats,
+ 					                     tirDirection, 2)
+			        
+                                self.vue.ajouteBalle(balle)
+#				balleLargeur = 10
+#				balleHauteur = 10
+#				tirDirection = 2 * pi * i / n
+#				vr = 50
+#				vTheta = pi
+#				distance = 10
+				
+#				balle = BalleOrbitale(self.fenetre, self.vue, balleLargeur, balleHauteur,
+#								  Ennemi.GROUPE, tirDirection, vr, vTheta, distance, 1,
+#								  boss, 10)
+				
 
-				balleLargeur = 10
-				balleHauteur = 10
-				tirDirection = 2 * pi * i / n
-				vr = 50
-				vTheta = pi
-				distance = 10
-				
-				balle = BalleOrbitale(self.fenetre, self.vue, balleLargeur, balleHauteur,
-								  Ennemi.GROUPE, tirDirection, vr, vTheta, distance, 1,
-								  boss, 10)
-				
-				self.vue.ajouteBalle(balle)
 			
 			#On ne trigger qu'une fois, après on repasse en état 0
-			self.etat = 0
+                        self.etat = 0
 				
 
 

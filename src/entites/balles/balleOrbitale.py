@@ -44,7 +44,7 @@ class BalleOrbitale(Balle):
 		self.centre = centre
 		self.timer = timer
 		self.vrAbs = vr #Ne change jamais
-		self.vr = vr
+		self.vr = 0
 		self.vTheta = vTheta
 		self.vx = vr * cos(direction) + centre.vx
 		self.vy = vr * sin(direction) + centre.vy
@@ -60,16 +60,16 @@ class BalleOrbitale(Balle):
 		self.r = sqrt((self.x - x0)**2 + (self.y - y0)**2)
 
 		# calcule theta
-		dt = self.vue.getDT()
-		self.theta += self.vTheta * dt
+		self.theta = phase(self.vx + 1j * self.vy) #Je suis tro bô
 
 		# Histoire de rendre la formule buvable
 		r, theta = self.r, self.theta
 		vr, vTheta = self.vr, self.vTheta
 
 		# Bon faut projeter :)
+		print(self.vr)
 		self.vx = vr * cos(theta) + r * vTheta * sin(theta) + self.centre.vx
-		self.vy = vr * sin(theta) - r * vTheta * cos(theta) + self.centre.vy
+		self.vy = vr * sin(theta) + r * vTheta * cos(theta) + self.centre.vy
 		
 	def update(self):
 		
@@ -78,22 +78,24 @@ class BalleOrbitale(Balle):
 		x, y = self.x, self.y
 		centre = self.centre
 		
-		self.calculeVitesse()
 		super().update()
+		self.calculeVitesse()
 		
 		r = abs(x - centre.x + 1j * (y - centre.y))
 		self.timer -= dt
 		
 		#Il faut tourner autour du boss
 		if self.timer > 0:
-			self.vr = self.vrAbs * (1 - r / self.distance)
-			print(self.vr)
+ 			self.vr = self.vrAbs * (1 - r / self.distance)
+ 			
  			
 		#Si le temps est écoulé, on revient sur le boss
 		else:
  			self.vr = - 1 * self.vrAbs
  			if r < self.vrAbs:
- 				 self.retire()
+				 self.retire()
+				 
+
 			
 		
 		
