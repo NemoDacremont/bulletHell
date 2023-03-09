@@ -7,7 +7,18 @@ import pygame
 
 
 class Jeu():
-	def __init__(self, fenetreLargeur: int, fenetreHauteur: int, fps: int):
+	def __init__(self, fenetreLargeur: int, fenetreHauteur: int, fps: int,
+			afficheHitBox=True):
+		# Init pygame
+		pygame.display.init()
+		pygame.font.init()
+		print("default font:", pygame.font.get_default_font())
+		# print("available fonts:", pygame.font.get_fonts())
+
+		self.font = pygame.font.SysFont("sans", 16)
+
+		# cool
+
 		fondDecran = None
 		self.fenetre = Fenetre(fenetreLargeur, fenetreHauteur, fps, fondDecran)
 
@@ -27,13 +38,7 @@ class Jeu():
 		self.vues: list[Vue] = [vue]
 		self.vueCourrante: int = 0
 
-		pygame.display.init()
-		pygame.font.init()
-		print("default font:", pygame.font.get_default_font())
-		# print("available fonts:", pygame.font.get_fonts())
-
-		self.font = pygame.font.SysFont("sans", 16)
-
+		self.afficheHitBox = afficheHitBox
 
 
 
@@ -49,8 +54,13 @@ class Jeu():
 		self.vueCourrante = indiceVue
 		return True
 
+
 	def getDT(self) -> float:
 		return self.dt
+
+
+	def getAffichehitBox(self) -> bool:
+		return self.afficheHitBox
 
 
 	def stopGame(self):
