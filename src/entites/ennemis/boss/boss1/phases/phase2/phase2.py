@@ -30,11 +30,8 @@ class Boss1Phase2(Phase):
 		#Création des attaques
 		attaque1 = Boss1Phase2Dash(boss)
 		self.paterns = [attaque1]
-		
-		self.paternActif = choice(self.paterns)
-		
 
-				
+		self.paternActif = choice(self.paterns)
 
 
 

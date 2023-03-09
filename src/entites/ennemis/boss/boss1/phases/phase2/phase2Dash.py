@@ -15,7 +15,7 @@ from entites.ennemis.ennemi import Ennemi
 
 class Boss1Phase2Dash(Phase):
 	
-	PV = 2000 #Evite des bug
+	PV = 2000  # Evite des bug
 
 	CADENCE_DE_TIR = 10
 	NB_BALLES = 36
@@ -39,32 +39,31 @@ class Boss1Phase2Dash(Phase):
 		self.xJ, self.yJ = None, None
 
 
-	def deplacements(self, xJ = None, yJ = None):
+	def deplacements(self, xJ: float, yJ: float):
 		
-		#Un peu de lisibilité
+		# Un peu de lisibilité
 		boss = self.boss
 		x, y = boss.x, boss.y
-		
-		#Fonce sur le joueur
+
+		# Fonce sur le joueur
 		if self.etat == 1:
 			boss.vx = - 1 * Boss1Phase2Dash.VITESSE * (x - xJ) / sqrt((x - xJ) ** 2 + (y - yJ) ** 2)
 			boss.vy = -1 * Boss1Phase2Dash.VITESSE * (y - yJ) / sqrt((x - xJ) ** 2 + (y - yJ) ** 2)
-		
+
 		else:
 			boss.vx = 0
 			boss.vy = 0
-		
+
 
 
 	def tire(self):
-		
+
 		# pour un peu plus de lisibilité
 		boss = self.boss
 		n = Boss1Phase2Dash.NB_BALLES
-		
+
 		# Balles droites de l'etat 1
 		if self.etat == 1:
-			
 			# variables de la balle
 			balleLargeur = 10
 			balleHauteur = 10
@@ -76,23 +75,21 @@ class Boss1Phase2Dash(Phase):
 
 			tirVitesse = self.fenetre.getHauteur() / 2
 			tirDegats = 1
-			
-			#On envoie deux balles perpendiculaires
+
+			# On envoie deux balles perpendiculaires
 			balle1 = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur,
-							  tir1X, tirY, Ennemi.GROUPE, tirVitesse, tirDegats,
-							  tirDirection)
-			
+				tir1X, tirY, Ennemi.GROUPE, tirVitesse, tirDegats, tirDirection)
+
 			tirDirection += pi
 			balle2 = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur,
-							  tir1X, tirY, Ennemi.GROUPE, tirVitesse, tirDegats,
-							  tirDirection)
+				tir1X, tirY, Ennemi.GROUPE, tirVitesse, tirDegats, tirDirection)
 
 			self.vue.ajouteBalle(balle1)
 			self.vue.ajouteBalle(balle2)
 
 		# Balles continuum pour l'état 2
-		if self.etat == 2 :
-			
+		if self.etat == 2:
+
 			for i in range(n):
 				# variables de la balle
 				balleLargeur = 10
@@ -107,8 +104,7 @@ class Boss1Phase2Dash(Phase):
 				tirDegats = 1	
 				
 				balle = BalleDroiteContinuum(self.fenetre, self.vue, balleLargeur, balleHauteur,
-					  tir1X, tirY, Ennemi.GROUPE, tirVitesse, tirDegats,
-					  tirDirection, 2)
+					tir1X, tirY, Ennemi.GROUPE, tirVitesse, tirDegats, tirDirection, 2)
 				
 				self.vue.ajouteBalle(balle)
 			

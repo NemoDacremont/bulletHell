@@ -20,7 +20,7 @@ class Boss1(Boss):
 	LARGEUR = 60
 	HAUTEUR = 60
 
-	PV_MAX = 100
+	PV_MAX = 500
 
 	VITESSE = 50
 

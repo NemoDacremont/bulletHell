@@ -1,7 +1,7 @@
 
 # maths, cool
-from math import pi
-from random import randint
+from math import pi, cos, sin
+from random import randint, random
 from entites.balles.balleCirculaire import BalleCirculaire
 from entites.balles.balleDroite import BalleDroite
 
@@ -13,7 +13,7 @@ from entites.ennemis.ennemi import Ennemi
 
 
 class Boss1Phase1(Phase):
-	CADENCE_DE_TIR = 2
+	CADENCE_DE_TIR = 1
 
 	PV = 2000
 
@@ -24,7 +24,7 @@ class Boss1Phase1(Phase):
 		self.vue = self.boss.vue
 
 		# Cadence de tir
-		self.timerTir = 1 / Boss1Phase1.CADENCE_DE_TIR
+		self.timerTir = 0  # 1 / Boss1Phase1.CADENCE_DE_TIR
 
 		self.attaques = [
 			self.attaque1
@@ -32,18 +32,44 @@ class Boss1Phase1(Phase):
 
 
 	def attaque1(self):
-		for i in range(12):
+
+		for i in range(13):
 			balleLargeur, balleHauteur = (10, 10)
 
 			centreX, centreY = self.boss.getPositionCentre()
-			bossHauteur = self.boss.getDimension()[1]
+			bossHauteur, _ = self.boss.getDimension()
 
 			x0 = centreX
-			y0 = centreY + (bossHauteur / 2) + balleHauteur * 2
+			y0 = centreY + bossHauteur / 2
 
-			theta = i * pi / 12
+			theta = - i * pi / 12
 
-			tirVitesse = 200
+			tirVitesse = 50
+			tirDegats = 1
+
+
+			balle = BalleDroite(self.fenetre, self.vue, balleLargeur, balleHauteur,
+				x0, y0, Ennemi.GROUPE, tirVitesse, tirDegats, theta)
+
+			self.vue.ajouteBalle(balle)
+
+
+
+	def attaque2(self):
+		# theta_mvmt = random() * 2 * pi
+
+		for i in range(13):
+			balleLargeur, balleHauteur = (10, 10)
+
+			centreX, centreY = self.boss.getPositionCentre()
+			bossHauteur, _ = self.boss.getDimension()
+
+			x0 = centreX
+			y0 = centreY + bossHauteur / 2
+
+			theta = - i * pi / 12
+
+			tirVitesse = 50
 			tirDegats = 1
 
 

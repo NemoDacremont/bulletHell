@@ -3,6 +3,8 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
+from spritesheet import Spritesheet
+
 if TYPE_CHECKING:
 	from fenetre import Fenetre
 	from vues.vue import Vue
@@ -25,8 +27,9 @@ class Ennemi(Personnage):
 							vitesse: float = 100) -> None:
 
 		# Constructeur du personnage
+		spritesheet = Spritesheet("/home/odasta/Documents/programmation/python/prepa-2/bulletHell/src/assets/Ship_Nebula-Sprite_Sheet.png")
 		super().__init__(nom, fenetre, vue, largeur, hauteur, x, y, PVMax, PV,
-									vitesse)
+			vitesse, spritesheet)
 
 		self.groupe = Ennemi.GROUPE
 
