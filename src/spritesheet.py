@@ -6,28 +6,30 @@
 # (x, y, x + offset, y + offset)
 
 import pygame
+from pygame import Surface
 
 
-class spritesheet(object):
+class Spritesheet(object):
 	def __init__(self, filename):
 		try:
-			self.sheet = pygame.image.load(filename).convert()
+			self.sheet = pygame.image.load(filename).convert_alpha()
 		except pygame.error as message:
 			print('Unable to load spritesheet image:', filename)
 			print(message)
 			raise SystemExit
 
 	# Load a specific image from a specific rectangle
-	def image_at(self, rectangle, colorkey=None):
+	def image_at(self, rectangle, colorkey=None) -> Surface:
 		"""Loads image from x,y,x+offset,y+offset"""
 		rect = pygame.Rect(rectangle)
-		image = pygame.Surface(rect.size).convert()
-		image.blit(self.sheet, (0, 0), rect)
+		image = pygame.Surface(rect.size).convert_alpha()
+		image.fill((0, 0, 0, 0))
+		image.blit(self.sheet, (0, 0), rect, pygame.BLEND_ALPHA_SDL2)
 		if colorkey is not None:
 			if colorkey is -1:
 				colorkey = image.get_at((0, 0))
 
-			# image.set_colorkey(colorkey, pygame.RLEACCEL)
+			image.set_colorkey(colorkey, pygame.RLEACCEL)
 		return image
 
 	# Load a whole bunch of images and return them as a list
@@ -36,8 +38,8 @@ class spritesheet(object):
 		return [self.image_at(rect, colorkey) for rect in rects]
 
 	# Load a whole strip of images
-	def load_strip(self, rect, image_count, colorkey = None):
+	def load_strip(self, rect, image_count, colorkey=None):
 		"""Loads a strip of images and returns them as a list"""
-		tups = [(rect[0]+rect[2]*x, rect[1], rect[2], rect[3])
+		tups = [(rect[0] + rect[2] * x, rect[1], rect[2], rect[3])
 						for x in range(image_count)]
 		return self.images_at(tups, colorkey)

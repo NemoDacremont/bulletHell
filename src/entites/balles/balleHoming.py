@@ -3,13 +3,15 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
+from spritesheet import Spritesheet
+
 if TYPE_CHECKING:
 	from fenetre import Fenetre
 	from vues.vue import Vue
 	from entites.personnage import Personnage
 
 from entites.balles.balle import Balle
-from math import sqrt, inf
+from math import sqrt, inf, atan
 
 
 class BalleHoming(Balle):
@@ -17,8 +19,10 @@ class BalleHoming(Balle):
 
 	def __init__(self, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float,
 							x: float, y: float, groupe: int, vitesse: float, degats: float):
+
+		SPRITESHEET = Spritesheet("/home/odasta/Documents/programmation/python/prepa-2/bulletHell/src/assets/LaserSprites/03.png")
 		super().__init__(BalleHoming.NOM, fenetre, vue, largeur, hauteur, x, y,
-										groupe, degats)
+			groupe, degats, SPRITESHEET)
 
 
 		self.vitesse = vitesse

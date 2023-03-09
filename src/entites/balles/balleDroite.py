@@ -9,6 +9,8 @@ if TYPE_CHECKING:
 
 from math import cos, sin
 from entites.balles.balle import Balle
+import pygame
+# from spritesheet import Spritesheet
 
 
 
@@ -39,8 +41,11 @@ class BalleDroite(Balle):
 			groupe, degats)
 
 		self.direction = direction
-		self.vy = sin(direction) * vitesse
+		self.vy = - sin(direction) * vitesse
 		self.vx = cos(direction) * vitesse
+
+		self.rotImage(direction)
+
 
 
 	def update(self):
@@ -54,16 +59,16 @@ class BalleDroite(Balle):
 
 		# Si la balle sort de l'écran, on la retire
 		h, k = self.fenetre.getDimensions()
-		
+
 		if self.y < -self.hauteur:
 			self.retire()
-		
+
 		if self.y > k + self.hauteur:
 			self.retire()
-		
+
 		if self.x > h + self.hauteur:
 			self.retire()
-				
+
 
 		if self.x < -self.hauteur:
 			self.retire()

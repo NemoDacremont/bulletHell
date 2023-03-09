@@ -20,7 +20,7 @@ d'éloignement proportionnelle à leur distance.
 v = Hr
 """
 
-class balleHubble():
+class balleHubble(Balle):
 	NOM = "balleHbble"
 
 	def __init__(self, balle, ref, H) -> None:
@@ -65,10 +65,10 @@ class balleHubble():
 		if self.y > k + self.hauteur:
 			if self.continuum <= 0:
 				self.retire()
-		
+
 		if self.x > h + self.hauteur:
 			self.retire()
-				
+
 
 		if self.x < -self.hauteur:
 			self.retire()
