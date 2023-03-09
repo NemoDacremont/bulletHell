@@ -1,3 +1,11 @@
+# importations bizarre, permet d'importer les types sans avoir
+# d'erreures d'importations circulaires
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+	from spritesheet import Spritesheet
+
 
 from pygame.event import Event
 import pygame
@@ -13,8 +21,8 @@ class PersonnageJouable(Personnage):
 	TOUCHES_DEPLACEMENT_GAUCHE = [pygame.K_q, pygame.K_LEFT]
 	TOUCHES_DEPLACEMENT_DROITE = [pygame.K_d, pygame.K_RIGHT]
 
-	TOUCHES_FOCUS = [pygame.K_k]
-	TOUCHE_ATTAQUE = [pygame.K_o]
+	TOUCHES_FOCUS = [pygame.K_k, pygame.K_LSHIFT]
+	TOUCHE_ATTAQUE = [pygame.K_o, pygame.K_SPACE]
 
 	GROUPE = 1
 
@@ -25,8 +33,8 @@ class PersonnageJouable(Personnage):
 	DUREE_IFRAME = 0.5
 
 	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float,
-		hauteur: float, x: float, y: float, PVMax: float, PV: float = -1,
-		vitesse: float = 100, coefRalentissementFocus: float = 0.3) -> None:
+		hauteur: float, x: float, y: float, PVMax: float, PV: float,
+		vitesse: float, coefRalentissementFocus: float, spritesheet: Spritesheet) -> None:
 		"""
 			Constructeur Personnage
 			Paramètres:
@@ -44,7 +52,7 @@ class PersonnageJouable(Personnage):
 					l'action "focus"
 		"""
 		super().__init__(nom, fenetre, vue, largeur, hauteur, x, y, PVMax, PV,
-			vitesse)
+			vitesse, spritesheet)
 
 		self.nom = nom
 
@@ -66,7 +74,7 @@ class PersonnageJouable(Personnage):
 		self.groupe = PersonnageJouable.GROUPE
 
 		self.hitbox = pygame.Rect(x, y, PersonnageJouable.HITBOX_LARGEUR,
-														PersonnageJouable.HITBOX_HAUTEUR)
+			PersonnageJouable.HITBOX_HAUTEUR)
 
 
 	def recoitDegats(self, degats: float):

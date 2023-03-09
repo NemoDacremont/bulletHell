@@ -1,14 +1,13 @@
 # importations bizarre, permet d'importer les types sans avoir
 # d'erreures d'importations circulaires
 from __future__ import annotations
-from sys import path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
 	from jeu import Jeu
 
 
-import pygame
+# import pygame
 from vues.vue import Vue
 from entites.personnage import Personnage
 from entites.personnageJouable.personnage1 import Personnage1
@@ -35,7 +34,7 @@ class VueBoss(Vue):
 
 		#  Création d'un ennemi
 		ennemiX = fenetreLargeur / 2
-		ennemiY = 50
+		ennemiY = fenetreHauteur / 2
 
 		ennemi = Boss1(self.fenetre, self, ennemiX, ennemiY)
 
@@ -49,12 +48,12 @@ class VueBoss(Vue):
 			print(personnage.nom)
 
 		# Sprites, tests
-		self.image = pygame.image.load("/home/odasta/Documents/programmation/python/prepa-2/bulletHell/src/assets/Ship_Nebula-Sprite_Sheet.png")
+		# self.image = pygame.image.load("/home/odasta/Documents/programmation/python/prepa-2/bulletHell/src/assets/Ship_Nebula-Sprite_Sheet.png")
 
 	def draw(self):
 		super().draw()
 
-		self.fenetre.getFenetre().blit(self.image, (0, 0))
+		# self.fenetre.getFenetre().blit(self.image, (0, 0))
 
 
 

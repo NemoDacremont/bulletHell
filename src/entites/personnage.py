@@ -1,11 +1,12 @@
-
 from __future__ import annotations
 from typing import TYPE_CHECKING
+
 
 if TYPE_CHECKING:
 	from pygame.event import Event
 	from fenetre import Fenetre
 	from vues.vue import Vue
+	from spritesheet import Spritesheet
 
 import pygame
 from entites.entite import Entite
@@ -15,8 +16,9 @@ class Personnage(Entite):
 	COLOR = 0, 255, 0
 	V_EPS = 5  # on considère la vitesse nulle si <5
 
-	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float, hauteur: float,
-							x: float, y: float, PVMax: float, PV: float = -1, vitesse: float = 100) -> None:
+	def __init__(self, nom: str, fenetre: Fenetre, vue: Vue, largeur: float,
+			hauteur: float, x: float, y: float, PVMax: float, PV: float, vitesse: float,
+			spritesheet: Spritesheet) -> None:
 		"""
 			Constructeur Personnage
 			Paramètres:
@@ -30,7 +32,7 @@ class Personnage(Entite):
 				- PV: float, les PVs initiaux du personnage, si PV == -1, alors PV = PVMax
 				- vitesse: float, le nombre de pixels parcourus en 1 sec
 		"""
-		super().__init__(nom, fenetre, vue, largeur, hauteur, x, y)
+		super().__init__(nom, fenetre, vue, largeur, hauteur, x, y, spritesheet)
 
 		# groupe par défaut: 0
 		self.groupe = 0

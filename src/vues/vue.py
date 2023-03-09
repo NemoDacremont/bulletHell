@@ -38,9 +38,14 @@ class Vue:
 		return self.jeu.getDT()
 
 
+	def getAfficheHitBox(self) -> bool:
+		return self.jeu.getAffichehitBox()
+
+
 	def getPersonnages(self):
 		return self.personnages
-	
+
+
 	def getJoueurs(self):
 		return self.joueurs
 
